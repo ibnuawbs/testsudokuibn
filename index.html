@@ -318,29 +318,9 @@
 </div>
 </div>
 <script>
-        const solution = [
-            5, 3, 4, 6, 7, 8, 9, 1, 2,
-            6, 7, 2, 1, 9, 5, 3, 4, 8,
-            1, 9, 8, 3, 4, 2, 5, 6, 7,
-            8, 5, 9, 7, 6, 1, 4, 2, 3,
-            4, 2, 6, 8, 5, 3, 7, 9, 1,
-            7, 1, 3, 9, 2, 4, 8, 5, 6,
-            9, 6, 1, 5, 3, 7, 2, 8, 4,
-            2, 8, 7, 4, 1, 9, 6, 3, 5,
-            3, 4, 5, 2, 8, 6, 1, 7, 9
-        ];
-
-        const clues = [
-            5, 0, 4, 6, 7, 8, 9, 1, 2,
-            6, 7, 2, 1, 9, 5, 3, 4, 8,
-            1, 9, 8, 0, 4, 2, 5, 6, 7,
-            8, 5, 9, 7, 6, 1, 0, 0, 3,
-            4, 2, 6, 8, 5, 3, 7, 9, 1,
-            7, 1, 3, 9, 2, 4, 8, 0, 6,
-            9, 6, 1, 0, 3, 0, 2, 8, 4,
-            2, 8, 0, 4, 1, 9, 6, 3, 5,
-            3, 4, 5, 2, 8, 6, 1, 7, 9
-        ];
+        // Data diinisialisasi kosong, akan terisi dinamis dari repositori publik GitHub Anda[cite: 1]
+        let solution = [];
+        let clues = [];
 
         const gridElement = document.getElementById('sudoku-grid');
         const boardWrapper = document.getElementById('board-wrapper');
@@ -358,6 +338,54 @@
         let isPaused = false;
         let timerInterval = null;
         let gameFinished = false;
+
+        // FUNGSI UTAMA: Menarik data soal.json dari repositori publik GitHub Anda secara dinamis[cite: 1]
+        async function muatSoalHarianDariGithub() {
+            const urlRawGithub = "https://raw.githubusercontent.com/ibnuawbs/testsudokuibn/refs/heads/main/soal.json";
+
+            try {
+                const response = await fetch(urlRawGithub);
+                if (!response.ok) throw new Error("Koneksi ke repositori GitHub bermasalah.");
+                
+                const data = await response.json();
+                const listSoal = data.puzzles;
+
+                // Ambil tanggal kalender hari ini (Angka 1 sampai 31)[cite: 1]
+                const sekarang = new Date();
+                const tanggalHariIni = sekarang.getDate(); 
+
+                // Cari objek soal di dalam file JSON yang nilai "id"-nya cocok dengan tanggal hari ini[cite: 1]
+                let soalHariIni = listSoal.find(soal => parseInt(soal.id) === tanggalHariIni);
+
+                // Cadangan otomatis jika tanggal 31 tidak ada di file JSON Anda[cite: 1]
+                if (!soalHariIni) {
+                    console.log(`Soal tanggal ${tanggalHariIni} belum ada. Menampilkan soal indeks pertama.`);
+                    soalHariIni = listSoal[0]; 
+                }
+
+                // Mengubah format matriks 2D milik JSON menjadi flat array 1D lurus (81 elemen)[cite: 1]
+                solution = soalHariIni.solution.flat();
+                clues = soalHariIni.puzzle.flat();
+
+                // Memperbarui judul di header mengikuti ID & Level yang sedang aktif secara otomatis[cite: 1]
+                const headerTitle = document.querySelector('header h1');
+                if (headerTitle) {
+                    headerTitle.textContent = `Zen Sudoku #${soalHariIni.id} (Lv. ${soalHariIni.level})`;
+                }
+
+                // Render papan permainan dan jalankan timer[cite: 1]
+                initGrid();
+                startTimer();
+
+            } catch (error) {
+                console.error("Gagal memuat soal online. Menggunakan data cadangan standard.", error);
+                // Mode Cadangan Offline: Mencegah game freeze jika internet mati[cite: 1]
+                solution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
+                clues = [5,0,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,0,4,2,5,6,7,8,5,9,7,6,1,0,0,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,0,6,9,6,1,0,3,0,2,8,4,2,8,0,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
+                initGrid();
+                startTimer();
+            }
+        }
 
         function initGrid() {
             gridElement.innerHTML = '';
@@ -491,7 +519,6 @@
             document.getElementById('win-time').textContent = formatTime(timerSeconds);
             winModal.classList.add('active');
             
-            // Clear highlights
             if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
             const cells = gridElement.children;
             for (let i = 0; i < 81; i++) {
@@ -657,7 +684,7 @@
             }
         });
 
-        initGrid();
-        startTimer();
+        // Memicu alur asinkron pembacaan repositori publik GitHub[cite: 1]
+        muatSoalHarianDariGithub();
     </script>
 </body></html>
