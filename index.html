@@ -10,97 +10,22 @@
             theme: {
                 extend: {
                     "colors": {
-                        "surface-container-low": "#eff4ff",
-                        "surface-container-high": "#dce9ff",
-                        "on-surface-variant": "#464555",
                         "on-background": "#0b1c30",
-                        "on-secondary": "#ffffff",
-                        "outline-variant": "#c7c4d8",
-                        "secondary-fixed-dim": "#bec6e0",
-                        "on-tertiary-container": "#dadcde",
-                        "secondary-container": "#dae2fd",
-                        "surface": "#f8f9ff",
-                        "surface-tint": "#4d44e3",
-                        "on-error-container": "#93000a",
-                        "on-primary": "#ffffff",
-                        "on-primary-fixed-variant": "#3323cc",
-                        "primary-fixed": "#e2dfff",
-                        "on-secondary-fixed": "#131b2e",
-                        "inverse-on-surface": "#eaf1ff",
-                        "inverse-primary": "#c3c0ff",
-                        "surface-container-highest": "#d3e4fe",
-                        "on-error": "#ffffff",
-                        "tertiary-container": "#5e6163",
-                        "on-primary-fixed": "#0f0069",
-                        "surface-bright": "#f8f9ff",
-                        "on-secondary-container": "#5c647a",
-                        "on-tertiary-fixed-variant": "#444749",
-                        "background": "#f8f9ff",
-                        "tertiary": "#46494b",
-                        "error": "#ba1a1a",
-                        "on-tertiary": "#ffffff",
-                        "on-tertiary-fixed": "#191c1e",
-                        "surface-container": "#e5eeff",
-                        "inverse-surface": "#213145",
-                        "tertiary-fixed": "#e0e3e5",
-                        "error-container": "#ffdad6",
-                        "on-primary-container": "#dad7ff",
-                        "outline": "#777587",
-                        "secondary": "#565e74",
-                        "surface-dim": "#cbdbf5",
-                        "surface-variant": "#d3e4fe",
                         "primary": "#3525cd",
-                        "on-surface": "#0b1c30",
-                        "secondary-fixed": "#dae2fd",
-                        "on-secondary-fixed-variant": "#3f465c",
-                        "surface-container-lowest": "#ffffff",
-                        "primary-container": "#4f46e5",
-                        "primary-fixed-dim": "#c3c0ff",
-                        "tertiary-fixed-dim": "#c4c7c9"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "element-spacing": "1rem",
-                        "grid-gap": "2px",
-                        "container-padding": "1.5rem",
-                        "button-height": "3.5rem",
-                        "block-gap": "4px"
-                    },
-                    "fontFamily": {
-                        "cell-input": ["Inter", "sans-serif"],
-                        "button-label": ["Inter", "sans-serif"],
-                        "cell-note": ["Inter", "sans-serif"],
-                        "display-game-number": ["Inter", "sans-serif"],
-                        "cell-fixed": ["Inter", "sans-serif"],
-                        "status-label": ["Inter", "sans-serif"]
-                    },
-                    "fontSize": {
-                        "cell-input": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
-                        "button-label": ["16px", {"lineHeight": "24px", "letterSpacing": "0.02em", "fontWeight": "500"}],
-                        "cell-note": ["10px", {"lineHeight": "12px", "fontWeight": "400"}],
-                        "display-game-number": ["36px", {"lineHeight": "44px", "fontWeight": "600"}],
-                        "cell-fixed": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "status-label": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                        "surface": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "outline-variant": "#c7c4d8",
                     },
                     "keyframes": {
                         "cooldown": { "0%": { width: "0%" }, "100%": { width: "100%" } },
-                        "fadeIn": { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
-                        "slideUp": { "0%": { transform: "translateY(20px)", opacity: "0" }, "100%": { transform: "translateY(0)", opacity: "1" } },
                         "flashGlow": {
-                            "0%": { "backgroundColor": "rgba(34, 197, 94, 0.5)", "filter": "brightness(1.2)" },
-                            "50%": { "backgroundColor": "rgba(79, 70, 229, 0.4)", "filter": "brightness(1.4)" },
+                            "0%": { "backgroundColor": "rgba(34, 197, 94, 0.4)", "filter": "brightness(1.2)" },
+                            "50%": { "backgroundColor": "rgba(79, 70, 229, 0.3)", "filter": "brightness(1.3)" },
                             "100%": { "filter": "brightness(1)" }
                         }
                     },
                     "animation": {
                         "cooldown": "cooldown 4s linear",
-                        "fadeIn": "fadeIn 0.2s ease-out",
-                        "slideUp": "slideUp 0.3s ease-out",
                         "flash": "flashGlow 0.6s ease-in-out"
                     }
                 }
@@ -108,52 +33,41 @@
         }
     </script>
 <style>
-        /* FEATURE MAYOR: Proteksi Font Inter Global & Perbaikan Google Material Icons */
-        body, button, span, div, h1, h2, h3 {
-            font-family: 'Inter', sans-serif !important;
-        }
+        /* PROTEKSI FONT & IKON GLOBAL */
+        body, button, span, div, h1, h2, h3 { font-family: 'Inter', sans-serif !important; }
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             display: inline-block;
-            vertical-align: middle;
-            width: 24px;
-            height: 24px;
-            overflow: hidden;
+            line-height: 1 !important;
+            width: auto; height: auto;
         }
         
-        .sudoku-grid-container {
-            aspect-ratio: 1 / 1;
-        }
+        .sudoku-grid-container { aspect-ratio: 1 / 1; }
         .block-border-right { border-right: 4px solid rgba(11, 28, 48, 0.15); }
         .block-border-bottom { border-bottom: 4px solid rgba(11, 28, 48, 0.15); }
 
-        .cell {
-            background-color: #f8f9ff;
-            color: #0b1c30;
-            font-size: 24px !important;
-        }
-        .cell[data-fixed="true"] { color: #0b1c30; font-weight: 600; }
+        /* HIGHLIGHTING SYSTEM (LIGHT MODE) */
+        .cell { background-color: #f8f9ff; color: #0b1c30; font-size: 24px !important; }
+        .cell[data-fixed="true"] { color: #0b1c30; font-weight: 700; }
         .cell:not([data-fixed="true"]) { color: #3525cd; font-weight: 400; }
-
         .cell.highlight-crosshair { background-color: #dce9ff !important; }
         .cell.highlight-same-number { background-color: #a9beff !important; }
         .cell.selected { background-color: #3525cd !important; color: #ffffff !important; z-index: 10; }
         .cell.error-state { background-color: #ba1a1a !important; color: #ffffff !important; z-index: 10; }
 
+        /* PREMUM SOFT DARK MODE (SLATE THEME) */
         html.dark body { background-color: #0f172a !important; color: #cbd5e1 !important; }
         html.dark header { background-color: #0f172a !important; }
         html.dark .bg-surface-container-lowest { background-color: #1e293b !important; }
-        html.dark .bg-surface-container-low { background-color: #0f172a !important; }
         html.dark .bg-surface-container { background-color: #1e293b !important; }
         html.dark .bg-surface-container-high { background-color: #334155 !important; color: #94a3b8 !important; }
         html.dark .text-on-surface-variant { color: #94a3b8 !important; }
-        html.dark .text-on-surface { color: #f1f5f9 !important; }
         html.dark .bg-outline-variant { background-color: #334155 !important; }
-        html.dark .modal-overlay > div { background-color: #1e293b !important; color: #f1f5f9 !important; border-color: #475569 !important; }
         html.dark .block-border-right { border-right: 4px solid rgba(255, 255, 255, 0.12); }
         html.dark .block-border-bottom { border-bottom: 4px solid rgba(255, 255, 255, 0.12); }
 
+        /* HIGHLIGHTING SYSTEM (DARK MODE) */
         html.dark .cell { background-color: #1e293b; }
         html.dark .cell[data-fixed="true"] { color: #f1f5f9; }
         html.dark .cell:not([data-fixed="true"]) { color: #ffffff; } 
@@ -163,601 +77,312 @@
         html.dark .cell.error-state { background-color: #7f1d1d !important; color: #fca5a5 !important; }
 
         .animate-grid-flash { animation: flashGlow 0.6s ease-in-out; }
-
         #hint-cooldown-bar { display: none; }
         #hint-btn:disabled #hint-cooldown-bar { display: block; }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
-            z-index: 50;
-        }
+        .modal-overlay { display: none; position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 50; }
         .modal-overlay.active { display: flex; }
-        .paused-board { filter: blur(8px); pointer-events: none; user-select: none; }
-        #pause-overlay { display: none; }
-        #pause-overlay.active { display: flex; }
+        .paused-board { filter: blur(8px); pointer-events: none; }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-status-label overflow-x-hidden transition-colors duration-200">
-<header class="flex justify-between items-center px-container-padding w-full h-16 bg-surface dark:bg-background border-b border-outline-variant/10">
-<h1 class="text-on-surface dark:text-inverse-on-surface font-semibold text-[24px] tracking-tight">Ibn Sudoku</h1>
+<header class="flex justify-between items-center px-6 w-full h-16 bg-surface dark:bg-background border-b border-outline-variant/10">
+    <h1 class="text-on-surface dark:text-inverse-on-surface font-bold text-[22px] tracking-tight">Ibn Sudoku</h1>
 </header>
+
 <main class="flex-1 flex flex-col items-center justify-center p-4 max-w-[1200px] mx-auto w-full">
-<div class="w-full max-w-[500px] mb-4">
-<div class="flex justify-between items-center mb-3 px-1 gap-2 w-full">
-<div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-<div class="flex items-center gap-1 sm:gap-1.5 text-on-surface-variant text-[13px] sm:text-status-label bg-surface-container rounded-full px-2.5 py-1">
-<span class="material-symbols-outlined text-[18px]">timer</span>
-<span id="timer">00:00</span>
-</div>
-<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="pause-btn" title="Pause Game">
-<span class="material-symbols-outlined text-[20px]" id="pause-btn-icon">pause</span>
-</button>
-</div>
+    <div class="w-full max-w-[500px] mb-4">
+        <div class="flex justify-between items-center mb-3 px-1 gap-2">
+            <div class="flex items-center gap-1.5 shrink-0">
+                <div class="flex items-center gap-1.5 text-on-surface-variant text-[13px] bg-surface-container rounded-full px-3 py-1.5">
+                    <span class="material-symbols-outlined text-[18px]">timer</span>
+                    <span id="timer" class="font-medium">00:00</span>
+                </div>
+                <button class="flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90" id="pause-btn">
+                    <span class="material-symbols-outlined text-[22px]" id="pause-btn-icon">pause</span>
+                </button>
+            </div>
 
-<div class="flex items-center gap-1 sm:gap-1.5 text-on-surface-variant text-[12px] sm:text-[13px] bg-surface-container rounded-full px-3 py-1 font-medium overflow-hidden truncate">
-<span id="game-date-info">--, ---- ----</span>
-<span class="text-outline-variant/50">|</span>
-<span id="game-level-info">Level : easy</span>
-</div>
+            <div class="flex items-center gap-2 text-on-surface-variant text-[12px] sm:text-[13px] bg-surface-container rounded-full px-4 py-1.5 font-semibold truncate shadow-sm">
+                <span id="game-date-info">--- --</span>
+                <span class="opacity-30">|</span>
+                <span id="game-level-info">Lvl -</span>
+            </div>
 
-<div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="tutorial-btn" title="Tutorial">
-<span class="material-symbols-outlined text-[20px]">help_outline</span>
-</button>
-<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="dark-mode-btn" title="Toggle Dark Mode">
-<span class="material-symbols-outlined text-[20px]" id="dark-mode-icon">dark_mode</span>
-</button>
-</div>
-</div>
-<div class="relative">
-<div class="sudoku-grid-container bg-surface-container-lowest shadow-sm rounded-lg overflow-hidden border-2 border-outline-variant transition-all duration-300" id="board-wrapper">
-<div class="grid grid-cols-9 grid-rows-9 h-full w-full bg-outline-variant gap-[1px]" id="sudoku-grid">
-</div>
-</div>
-<div class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/10 rounded-lg backdrop-blur-[2px] transition-all duration-300" id="pause-overlay">
-<div class="bg-surface-container-lowest p-8 rounded-2xl shadow-xl flex flex-col items-center gap-6 border border-outline-variant animate-slideUp">
-<div class="flex flex-col items-center gap-2">
-<span class="material-symbols-outlined text-primary text-5xl">pause_circle</span>
-<h3 class="text-2xl text-on-surface font-semibold">Game Paused</h3>
-</div>
-<button class="bg-primary hover:bg-primary/90 text-on-primary px-10 py-3 rounded-full font-medium transition-all active:scale-95 shadow-md flex items-center gap-2" id="resume-btn">
-<span class="material-symbols-outlined">play_arrow</span>
-                            Resume
-                        </button>
-</div>
-</div>
-</div>
-</div>
-<div class="w-full max-w-[500px] flex flex-col gap-4">
-<div class="grid grid-cols-9 gap-2" id="number-pad">
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="1">1</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="2">2</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="3">3</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="4">4</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="5">5</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="6">6</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="7">7</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="8">8</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="9">9</button>
-</div>
-<div class="flex justify-between items-center bg-surface-container-low rounded-xl p-2 gap-4">
-<button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl" id="undo-btn">
-<span class="material-symbols-outlined">undo</span>
-<span class="text-[12px] font-medium mt-0.5">Undo</span>
-</button>
-<button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl" id="erase-btn">
-<span class="material-symbols-outlined">backspace</span>
-<span class="text-[12px] font-medium mt-0.5">Erase</span>
-</button>
-<button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-all active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl relative overflow-hidden group disabled:bg-surface-dim disabled:text-outline disabled:cursor-not-allowed" id="hint-btn">
-<div class="absolute bottom-0 left-0 h-1 bg-primary/30 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
-<span class="material-symbols-outlined">lightbulb</span>
-<span class="text-[12px] font-medium mt-0.5">Hint</span>
-</button>
-</div>
-</div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button class="flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90" id="tutorial-btn">
+                    <span class="material-symbols-outlined text-[22px]">help_outline</span>
+                </button>
+                <button class="flex items-center justify-center w-9 h-9 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90" id="dark-mode-btn">
+                    <span class="material-symbols-outlined text-[22px]" id="dark-mode-icon">dark_mode</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="relative">
+            <div class="sudoku-grid-container bg-surface-container-lowest shadow-lg rounded-xl overflow-hidden border-2 border-outline-variant transition-all duration-300" id="board-wrapper">
+                <div class="grid grid-cols-9 grid-rows-9 h-full w-full bg-outline-variant gap-[1px]" id="sudoku-grid"></div>
+            </div>
+            
+            <div class="absolute inset-0 z-20 hidden flex-col items-center justify-center bg-slate-900/10 rounded-xl backdrop-blur-[3px]" id="pause-overlay">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl flex flex-col items-center gap-5 border border-outline-variant/20 animate-slideUp">
+                    <div class="flex flex-col items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-6xl !w-auto !h-auto">pause_circle</span>
+                        <h3 class="text-2xl text-on-surface dark:text-white font-bold">Game Paused</h3>
+                    </div>
+                    <button class="bg-primary hover:bg-primary/90 text-white px-10 py-3.5 rounded-full font-bold transition-all active:scale-95 shadow-lg flex items-center gap-2" id="resume-btn">
+                        <span class="material-symbols-outlined text-[24px]">play_arrow</span> Resume
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full max-w-[500px] flex flex-col gap-4">
+        <div class="grid grid-cols-9 gap-2" id="number-pad">
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="1">1</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="2">2</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="3">3</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="4">4</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="5">5</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="6">6</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="7">7</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="8">8</button>
+            <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="9">9</button>
+        </div>
+        <div class="flex justify-between items-center bg-surface-container rounded-2xl p-2 gap-3 shadow-inner">
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl" id="undo-btn">
+                <span class="material-symbols-outlined">undo</span>
+                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Undo</span>
+            </button>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl" id="erase-btn">
+                <span class="material-symbols-outlined">backspace</span>
+                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Erase</span>
+            </button>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl relative overflow-hidden group disabled:opacity-50" id="hint-btn">
+                <div class="absolute bottom-0 left-0 h-1 bg-primary/40 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
+                <span class="material-symbols-outlined">lightbulb</span>
+                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Hint</span>
+            </button>
+        </div>
+    </div>
 </main>
+
 <div class="modal-overlay items-center justify-center p-4 animate-fadeIn" id="tutorial-modal">
-<div class="bg-surface-container-lowest max-w-[480px] w-full rounded-2xl shadow-xl overflow-hidden animate-slideUp flex flex-col">
-<div class="p-6 border-b border-outline-variant flex justify-between items-center">
-<h2 class="text-2xl text-on-surface font-bold">How to Play Sudoku</h2>
-<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90" id="close-modal-top">
-<span class="material-symbols-outlined text-[28px]">close</span>
-</button>
+    <div class="bg-white max-w-[480px] w-full rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-outline-variant/30">
+        <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+            <h2 class="text-xl font-bold">How to Play Sudoku</h2>
+            <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-all" id="close-modal-top">
+                <span class="material-symbols-outlined text-[28px]">close</span>
+            </button>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[70vh] space-y-5">
+            <img class="w-full rounded-2xl mb-2" src="https://lh3.googleusercontent.com/aida/ADBb0uidppCS8iUDf4Dt15yKmYdlRMovyga2_YuVzRQYnDtBhnA6ixzyc6fqUUI8Z2Q4ymvHdspz_dLbEjZ_ulJMEuKqyDD3k0rZoNyS0awowpeAxlGsPz_w82wjZ2OLRb4n04idUlWb2dvRUGcNq5lGfKVEJpuMqpD8eYRu9DRN1WAiwmDP_U90BntmDflZNU6lkIIfWCjkd1h_tO6Fs0QxFifkssDx6wswd_aE4kAHrUXcrZYu5uyi-QKkhg7m">
+            <div class="flex gap-4">
+                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">1</span>
+                <p class="text-sm leading-relaxed">Each row, column, and 3x3 box must contain numbers 1-9 without repetition.</p>
+            </div>
+            <div class="flex gap-4">
+                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">2</span>
+                <p class="text-sm leading-relaxed">Select a cell and use the number pad to fill in your moves.</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="p-6 overflow-y-auto max-h-[70vh]">
-<img alt="Sudoku rules illustration" class="w-full rounded-lg mb-6 border border-outline-variant" src="https://lh3.googleusercontent.com/aida/ADBb0uidppCS8iUDf4Dt15yKmYdlRMovyga2_YuVzRQYnDtBhnA6ixzyc6fqUUI8Z2Q4ymvHdspz_dLbEjZ_ulJMEuKqyDD3k0rZoNyS0awowpeAxlGsPz_w82wjZ2OLRb4n04idUlWb2dvRUGcNq5lGfKVEJpuMqpD8eYRu9DRN1WAiwmDP_U90BntmDflZNU6lkIIfWCjkd1h_tO6Fs0QxFifkssDx6wswd_aE4kAHrUXcrZYu5uyi-QKkhg7m">
-<div class="space-y-4">
-<div class="flex gap-4">
-<span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold">1</span>
-<p class="text-on-surface-variant text-[15px] leading-relaxed">Each row, column, and 3x3 subgrid must contain the numbers 1 through 9 without any repetition.</p>
-</div>
-<div class="flex gap-4">
-<span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold">2</span>
-<p class="text-on-surface-variant text-[15px] leading-relaxed">Click a cell to select it, then type a number or use the keypad below to enter your move.</p>
-</div>
-<div class="flex gap-4">
-<span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold">3</span>
-<p class="text-on-surface-variant text-[15px] leading-relaxed">Use the Hint button if you get stuck, but note the 4-second cooldown!</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <div class="modal-overlay items-center justify-center p-4 animate-fadeIn" id="win-modal">
-<div class="bg-surface-container-lowest max-w-[440px] w-full rounded-2xl shadow-2xl overflow-hidden animate-slideUp flex flex-col">
-<div class="p-8 text-center flex flex-col items-center">
-<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary text-5xl">workspace_premium</span>
-</div>
-<h2 class="text-3xl text-on-surface mb-2 font-bold">Congratulations!</h2>
-<p class="text-on-surface-variant mb-6">You solved today's puzzle in <span class="font-bold text-primary" id="win-time">00:00</span>.</p>
-<div class="bg-surface-container p-4 rounded-xl mb-8 w-full">
-<p class="text-on-surface font-medium text-sm">Come back tomorrow for a new puzzle!</p>
-</div>
-<button class="w-full bg-primary hover:bg-primary/90 text-on-primary px-8 py-4 rounded-full font-medium transition-all active:scale-95 shadow-md flex items-center justify-center gap-3" id="other-games-btn">
-<span class="material-symbols-outlined">casino</span>
-            Play Our Other Daily Games
+    <div class="bg-white max-w-[400px] w-full rounded-3xl shadow-2xl overflow-hidden p-8 text-center flex flex-col items-center">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+            <span class="material-symbols-outlined text-green-600 text-5xl">workspace_premium</span>
+        </div>
+        <h2 class="text-3xl font-bold mb-2">Well Done!</h2>
+        <p class="text-slate-500 mb-8">Solved in <span class="font-bold text-primary" id="win-time">00:00</span>.</p>
+        <button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-full font-bold transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2" onclick="location.reload()">
+            <span class="material-symbols-outlined">refresh</span> Play Again
         </button>
+    </div>
 </div>
-</div>
-</div>
+
 <script>
-        let solution = [];
-        let clues = [];
+    let solution = [], clues = [];
+    let currentSelectedCell = null, history = [], timerSeconds = 0;
+    let hintOnCooldown = false, isPaused = false, timerInterval = null, gameFinished = false;
 
-        const gridElement = document.getElementById('sudoku-grid');
-        const boardWrapper = document.getElementById('board-wrapper');
-        const pauseOverlay = document.getElementById('pause-overlay');
-        const pauseBtn = document.getElementById('pause-btn');
-        const pauseBtnIcon = document.getElementById('pause-btn-icon');
-        const resumeBtn = document.getElementById('resume-btn');
-        const tutorialModal = document.getElementById('tutorial-modal');
-        const winModal = document.getElementById('win-modal');
-        
-        let currentSelectedCell = null;
-        let history = [];
-        let timerSeconds = 0;
-        let hintOnCooldown = false;
-        let isPaused = false;
-        let timerInterval = null;
-        let gameFinished = false;
+    const gridElement = document.getElementById('sudoku-grid');
+    const boardWrapper = document.getElementById('board-wrapper');
+    const pauseOverlay = document.getElementById('pause-overlay');
+    const winModal = document.getElementById('win-modal');
 
-        async function muatSoalHarianDariGithub() {
-            const busterCache = new Date().getTime();
-            const urlRawGithub = `https://raw.githubusercontent.com/ibnuawbs/testsudokuibn/refs/heads/main/soal.json?v=${busterCache}`;
+    /* FEATURE MAYOR: FETCHING DAILY PUZZLE & FORMATTING HEADER INFO */
+    async function muatSoalHarianDariGithub() {
+        const busterCache = new Date().getTime();
+        const urlRawGithub = `https://raw.githubusercontent.com/ibnuawbs/testsudokuibn/refs/heads/main/soal.json?v=${busterCache}`;
+        try {
+            const response = await fetch(urlRawGithub, { cache: "no-store" }); 
+            const data = await response.json();
+            const listSoal = data.puzzles;
+            const sekarang = new Date();
+            const tanggalHariIni = sekarang.getDate(); 
 
-            try {
-                const response = await fetch(urlRawGithub, { cache: "no-store" }); 
-                if (!response.ok) throw new Error("Koneksi ke repositori GitHub bermasalah.");
-                
-                const data = await response.json();
-                const listSoal = data.puzzles;
-                const sekarang = new Date();
-                const tanggalHariIni = sekarang.getDate(); 
-
-                let soalHariIni = listSoal.find(soal => parseInt(soal.id) === tanggalHariIni);
-                if (!soalHariIni) {
-                    console.log(`Soal tanggal ${tanggalHariIni} belum tersedia. Memuat data indeks ke-0.`);
-                    soalHariIni = listSoal[0]; 
-                }
-
-                solution = [];
-                clues = [];
-                for (let r = 0; r < 9; r++) {
-                    for (let c = 0; c < 9; c++) {
-                        solution.push(soalHariIni.solution[r][c]);
-                        clues.push(soalHariIni.puzzle[r][c]);
-                    }
-                }
-
-                const hariStr = sekarang.getDate().toString().padStart(2, '0');
-                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-                document.getElementById('game-date-info').textContent = `${hariStr}, ${namaBulan[sekarang.getMonth()]} ${sekarang.getFullYear()}`;
-
-                const levelMap = { 1: 'easy', 2: 'medium', 3: 'hard', 4: 'expert', 5: 'master' };
-                const levelVal = soalHariIni ? soalHariIni.level : 1;
-                const levelText = levelMap[levelVal] || 'easy';
-                document.getElementById('game-level-info').textContent = `Level : ${levelText}`;
-
-                const headerTitle = document.querySelector('header h1');
-                if (headerTitle) {
-                    headerTitle.textContent = `Ibn Sudoku`;
-                }
-
-                initGrid();
-                startTimer();
-
-            } catch (error) {
-                console.error("Gagal memuat soal online. Menggunakan data cadangan standard.", error);
-                solution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
-                clues = [5,0,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,0,4,2,5,6,7,8,5,9,7,6,1,0,0,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,0,6,9,6,1,0,3,0,2,8,4,2,8,0,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
-                
-                const sekarang = new Date();
-                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-                document.getElementById('game-date-info').textContent = `${sekarang.getDate().toString().padStart(2, '0')}, ${namaBulan[sekarang.getMonth()]} ${sekarang.getFullYear()}`;
-                document.getElementById('game-level-info').textContent = `Level : easy`;
-
-                initGrid();
-                startTimer();
-            }
-        }
-
-        function initGrid() {
-            gridElement.innerHTML = '';
-            for (let i = 0; i < 81; i++) {
-                const cell = document.createElement('div');
-                const row = Math.floor(i / 9);
-                const col = i % 9;
-                
-                cell.className = 'cell flex items-center justify-center cursor-pointer relative transition-colors duration-150';
-                if ((col + 1) % 3 === 0 && col !== 8) cell.classList.add('block-border-right');
-                if ((row + 1) % 3 === 0 && row !== 8) cell.classList.add('block-border-bottom');
-                
-                cell.dataset.index = i;
-                cell.dataset.correct = solution[i];
-
-                if (clues[i] !== 0) {
-                    cell.textContent = clues[i];
-                    cell.dataset.fixed = "true";
-                }
-
-                cell.addEventListener('click', () => {
-                    if (!isPaused && !gameFinished) selectCell(cell);
-                });
-                cell.addEventListener('mouseenter', () => {
-                    if (!isPaused && !gameFinished && !currentSelectedCell) highlightCrosshair(i);
-                });
-                cell.addEventListener('mouseleave', () => {
-                    if (!isPaused && !gameFinished && !currentSelectedCell) clearCrosshair();
-                });
-                
-                gridElement.appendChild(cell);
-            }
-        }
-
-        function startTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                if (!isPaused && !gameFinished) {
-                    timerSeconds++;
-                    updateTimerDisplay();
-                }
-            }, 1000);
-        }
-
-        function formatTime(totalSeconds) {
-            const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-            const secs = (totalSeconds % 60).toString().padStart(2, '0');
-            return `${mins}:${secs}`;
-        }
-
-        function updateTimerDisplay() {
-            document.getElementById('timer').textContent = formatTime(timerSeconds);
-        }
-
-        function togglePause() {
-            if (gameFinished) return;
-            isPaused = !isPaused;
-            if (isPaused) {
-                boardWrapper.classList.add('paused-board');
-                pauseOverlay.classList.add('active');
-                pauseBtnIcon.textContent = 'play_arrow';
-                pauseBtn.title = "Resume Game";
-                pauseBtn.classList.add('bg-primary', 'text-on-primary');
-                pauseBtn.classList.remove('bg-surface-container', 'text-on-surface-variant');
-            } else {
-                boardWrapper.classList.remove('paused-board');
-                pauseOverlay.classList.remove('active');
-                pauseBtnIcon.textContent = 'pause';
-                pauseBtn.title = "Pause Game";
-                pauseBtn.classList.remove('bg-primary', 'text-on-primary');
-                pauseBtn.classList.add('bg-surface-container', 'text-on-surface-variant');
-            }
-        }
-
-        function selectCell(cell) {
-            if (isPaused || gameFinished) return;
-            if (currentSelectedCell) {
-                currentSelectedCell.classList.remove('selected');
-            }
-            cell.classList.add('selected');
-            currentSelectedCell = cell;
-            highlightCrosshair(parseInt(cell.dataset.index));
-        }
-
-        // FEATURE MAYOR: Logika Crosshair & Seleksi Angka Kembar
-        function highlightCrosshair(index) {
-            if (isPaused || gameFinished) return;
-            const row = Math.floor(index / 9);
-            const col = index % 9;
-            const cells = gridElement.children;
-            const targetValue = cells[index].textContent.trim();
-
-            for (let i = 0; i < 81; i++) {
-                const cRow = Math.floor(i / 9);
-                const cCol = i % 9;
-                const cVal = cells[i].textContent.trim();
-
-                cells[i].classList.remove('highlight-crosshair', 'highlight-same-number');
-
-                if (i === index) continue;
-
-                if (targetValue !== '' && cVal === targetValue) {
-                    cells[i].classList.add('highlight-same-number');
-                } else if (cRow === row || cCol === col) {
-                    cells[i].classList.add('highlight-crosshair');
-                }
-            }
-        }
-
-        function clearCrosshair() {
-            if (isPaused || gameFinished) return;
-            const cells = gridElement.children;
-            for (let i = 0; i < 81; i++) {
-                cells[i].classList.remove('highlight-crosshair', 'highlight-same-number');
-            }
-            if (currentSelectedCell) {
-                highlightCrosshair(parseInt(currentSelectedCell.dataset.index));
-            }
-        }
-
-        function periksaDanAnimasikanGrup(index) {
-            const row = Math.floor(index / 9);
-            const col = index % 9;
-            const boxRow = Math.floor(row / 3) * 3;
-            const boxCol = Math.floor(col / 3) * 3;
-            const cells = gridElement.children;
-
-            let rowBenar = true;
-            let colBenar = true;
-            let boxBenar = true;
-
-            for (let c = 0; c < 9; c++) {
-                const idx = row * 9 + c;
-                if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) rowBenar = false;
-            }
-
+            let soalHariIni = listSoal.find(soal => parseInt(soal.id) === tanggalHariIni) || listSoal[0];
             for (let r = 0; r < 9; r++) {
-                const idx = r * 9 + col;
-                if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) colBenar = false;
-            }
-
-            for (let r = 0; r < 3; r++) {
-                for (let c = 0; c < 3; c++) {
-                    const idx = (boxRow + r) * 9 + (boxCol + c);
-                    if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) boxBenar = false;
+                for (let c = 0; c < 9; c++) {
+                    solution.push(soalHariIni.solution[r][c]);
+                    clues.push(soalHariIni.puzzle[r][c]);
                 }
             }
 
-            if (rowBenar) {
-                for (let c = 0; c < 9; c++) jalankanEfekFlash(cells[row * 9 + c]);
-            }
-            if (colBenar) {
-                for (let r = 0; r < 9; r++) jalankanEfekFlash(cells[r * 9 + col]);
-            }
-            if (boxBenar) {
-                for (let r = 0; r < 3; r++) {
-                    for (let c = 0; c < 3; c++) {
-                        jalankanEfekFlash(cells[(boxRow + r) * 9 + (boxCol + c)]);
-                    }
-                }
-            }
-        }
+            const hariStr = tanggalHariIni.toString().padStart(2, '0');
+            const bulanStr = (sekarang.getMonth() + 1).toString().padStart(2, '0');
+            document.getElementById('game-date-info').textContent = `${hariStr}-${bulanStr}-${sekarang.getFullYear()}`;
+            document.getElementById('game-level-info').textContent = `Lvl ${soalHariIni.level}`;
 
-        function jalankanEfekFlash(cellElement) {
-            cellElement.classList.add('animate-grid-flash');
-            setTimeout(() => {
-                cellElement.classList.remove('animate-grid-flash');
-            }, 600);
-        }
-
-        function checkWinCondition() {
-            const cells = Array.from(gridElement.children);
-            const isFullAndCorrect = cells.every(cell => {
-                const currentVal = parseInt(cell.textContent);
-                const correctVal = parseInt(cell.dataset.correct);
-                return currentVal === correctVal;
-            });
-
-            if (isFullAndCorrect) {
-                triggerWin();
-            }
-        }
-
-        function triggerWin() {
-            gameFinished = true;
-            clearInterval(timerInterval);
-            document.getElementById('win-time').textContent = formatTime(timerSeconds);
-            winModal.classList.add('active');
-            
-            if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
-            clearCrosshair();
-
-            const cells = gridElement.children;
-            for (let i = 0; i < 81; i++) {
-                jalankanEfekFlash(cells[i]);
-            }
-        }
-
-        function inputNumber(val) {
-            if (isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
-            
-            const prevVal = currentSelectedCell.textContent;
-            const index = parseInt(currentSelectedCell.dataset.index);
-            const isError = currentSelectedCell.classList.contains('error-state');
-            
-            history.push({ index, val: prevVal, isError: isError });
-            currentSelectedCell.textContent = val;
-            
-            if (parseInt(val) === parseInt(currentSelectedCell.dataset.correct)) {
-                currentSelectedCell.classList.remove('error-state');
-                periksaDanAnimasikanGrup(index); 
-                checkWinCondition();
-            } else {
-                currentSelectedCell.classList.add('error-state');
-            }
-            highlightCrosshair(index);
-        }
-
-        function eraseValue() {
-            if (isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
-            
-            const prevVal = currentSelectedCell.textContent;
-            if (prevVal === '') return;
-
-            const index = parseInt(currentSelectedCell.dataset.index);
-            const isError = currentSelectedCell.classList.contains('error-state');
-            
-            history.push({ index, val: prevVal, isError: isError });
-            currentSelectedCell.textContent = '';
-            currentSelectedCell.classList.remove('error-state');
-            highlightCrosshair(index);
-        }
-
-        function undoAction() {
-            if (isPaused || gameFinished || history.length === 0) return;
-            const last = history.pop();
-            const cell = gridElement.children[last.index];
-            cell.textContent = last.val;
-            if (last.isError) {
-                cell.classList.add('error-state');
-            } else {
-                cell.classList.remove('error-state');
-            }
-            selectCell(cell);
-        }
-
-        function getHint() {
-            if (isPaused || gameFinished || hintOnCooldown) return;
-
-            if (!currentSelectedCell || currentSelectedCell.dataset.fixed === "true") {
-                const emptyCells = Array.from(gridElement.children).filter(c => !c.textContent && c.dataset.fixed !== "true");
-                if (emptyCells.length > 0) {
-                    selectCell(emptyCells[0]);
-                } else {
-                    return;
-                }
-            }
-            
-            if (currentSelectedCell.textContent == currentSelectedCell.dataset.correct) return;
-
-            const correctVal = currentSelectedCell.dataset.correct;
-            inputNumber(correctVal);
-
-            const hintBtn = document.getElementById('hint-btn');
-            hintOnCooldown = true;
-            hintBtn.disabled = true;
-
-            setTimeout(() => {
-                hintOnCooldown = false;
-                hintBtn.disabled = false;
-            }, 4000);
-        }
-
-        function showTutorial() {
-            if (!isPaused && !gameFinished) togglePause();
-            tutorialModal.classList.add('active');
-        }
-
-        // FEATURE MAYOR: Engine Pengendali Mode Gelap & Manajemen Default Tema (Light Mode Utama)
-        const darkModeBtn = document.getElementById('dark-mode-btn');
-        const darkModeIcon = document.getElementById('dark-mode-icon');
-
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark');
-            darkModeIcon.textContent = 'light_mode';
-        } else {
-            document.documentElement.classList.remove('dark');
-            darkModeIcon.textContent = 'dark_mode';
-            localStorage.setItem('theme', 'light'); 
-        }
-
-        darkModeBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-
-        function hideTutorial() {
-            tutorialModal.classList.remove('active');
-            if (isPaused && !gameFinished) togglePause();
-        }
-
-        document.querySelectorAll('.num-btn').forEach(btn => {
-            btn.addEventListener('click', () => inputNumber(btn.dataset.value));
-        });
-
-        document.getElementById('erase-btn').addEventListener('click', eraseValue);
-        document.getElementById('undo-btn').addEventListener('click', undoAction);
-        document.getElementById('hint-btn').addEventListener('click', getHint);
-        
-        pauseBtn.addEventListener('click', togglePause);
-        resumeBtn.addEventListener('click', togglePause);
-        document.getElementById('tutorial-btn').addEventListener('click', showTutorial);
-        document.getElementById('close-modal-top').addEventListener('click', hideTutorial);
-        
-        tutorialModal.addEventListener('click', (e) => {
-            if (e.target === tutorialModal) hideTutorial();
-        });
-
-        document.getElementById('other-games-btn').addEventListener('click', () => {
-            alert('Redirecting to game collection...');
+            initGrid();
+            startTimer();
+        } catch (error) {
+            console.error("Gagal memuat soal.");
             location.reload();
+        }
+    }
+
+    /* FEATURE MAYOR: GRID RENDERING & SELECTION SYSTEM */
+    function initGrid() {
+        gridElement.innerHTML = '';
+        for (let i = 0; i < 81; i++) {
+            const cell = document.createElement('div');
+            const row = Math.floor(i / 9), col = i % 9;
+            cell.className = 'cell flex items-center justify-center cursor-pointer relative transition-all duration-150';
+            if ((col + 1) % 3 === 0 && col !== 8) cell.classList.add('block-border-right');
+            if ((row + 1) % 3 === 0 && row !== 8) cell.classList.add('block-border-bottom');
+            cell.dataset.index = i;
+            cell.dataset.correct = solution[i];
+            if (clues[i] !== 0) { cell.textContent = clues[i]; cell.dataset.fixed = "true"; }
+            cell.addEventListener('click', () => selectCell(cell));
+            gridElement.appendChild(cell);
+        }
+    }
+
+    /* FEATURE MAYOR: HIGHLIGHTING & CROSSHAIR LOGIC */
+    function highlightCells(index) {
+        const row = Math.floor(index / 9), col = index % 9;
+        const cells = gridElement.children;
+        const targetValue = cells[index].textContent.trim();
+
+        for (let i = 0; i < 81; i++) {
+            const cRow = Math.floor(i / 9), cCol = i % 9;
+            const cVal = cells[i].textContent.trim();
+            cells[i].classList.remove('highlight-crosshair', 'highlight-same-number');
+            if (i === index) continue;
+            if (targetValue !== '' && cVal === targetValue) cells[i].classList.add('highlight-same-number');
+            else if (cRow === row || cCol === col) cells[i].classList.add('highlight-crosshair');
+        }
+    }
+
+    function selectCell(cell) {
+        if (isPaused || gameFinished) return;
+        if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
+        cell.classList.add('selected');
+        currentSelectedCell = cell;
+        highlightCells(parseInt(cell.dataset.index));
+    }
+
+    /* FEATURE MAYOR: REWARD ANIMATIONS (LINE/BOX FLASH) */
+    function checkGroupFlash(index) {
+        const row = Math.floor(index / 9), col = index % 9;
+        const bR = Math.floor(row / 3) * 3, bC = Math.floor(col / 3) * 3;
+        const cells = gridElement.children;
+        let rB = true, cB = true, xB = true;
+
+        for (let i = 0; i < 9; i++) {
+            if (parseInt(cells[row * 9 + i].textContent) !== parseInt(cells[row * 9 + i].dataset.correct)) rB = false;
+            if (parseInt(cells[i * 9 + col].textContent) !== parseInt(cells[i * 9 + col].dataset.correct)) cB = false;
+        }
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+            if (parseInt(cells[(bR + r) * 9 + (bC + c)].textContent) !== parseInt(cells[(bR + r) * 9 + (bC + c)].dataset.correct)) xB = false;
+        }
+
+        const trigger = (list) => list.forEach(idx => {
+            cells[idx].classList.add('animate-grid-flash');
+            setTimeout(() => cells[idx].classList.remove('animate-grid-flash'), 600);
         });
 
-        window.addEventListener('keydown', (e) => {
-            if (tutorialModal.classList.contains('active')) {
-                if (e.key === 'Escape') hideTutorial();
-                return;
-            }
-            
-            if (winModal.classList.contains('active')) return;
-            if (e.key === 'p' || e.key === 'P') {
-                togglePause();
-                return;
-            }
+        if (rB) trigger([...Array(9).keys()].map(i => row * 9 + i));
+        if (cB) trigger([...Array(9).keys()].map(i => i * 9 + col));
+        if (xB) {
+            let ids = [];
+            for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) ids.push((bR + r) * 9 + (bC + c));
+            trigger(ids);
+        }
+    }
 
-            if (isPaused || gameFinished) return;
+    /* FEATURE MAYOR: GAMEPLAY MUTATIONS (INPUT, UNDO, WIN) */
+    function inputNumber(val) {
+        if (isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
+        const idx = parseInt(currentSelectedCell.dataset.index);
+        history.push({ index: idx, val: currentSelectedCell.textContent, err: currentSelectedCell.classList.contains('error-state') });
+        currentSelectedCell.textContent = val;
+        if (parseInt(val) === parseInt(currentSelectedCell.dataset.correct)) {
+            currentSelectedCell.classList.remove('error-state');
+            checkGroupFlash(idx);
+            if (Array.from(gridElement.children).every(c => parseInt(c.textContent) === parseInt(c.dataset.correct))) triggerWin();
+        } else currentSelectedCell.classList.add('error-state');
+        highlightCells(idx);
+    }
 
-            if (e.key >= '1' && e.key <= '9') {
-                inputNumber(e.key);
-            }
-            else if (e.key === 'Backspace' || e.key === 'Delete') {
-                eraseValue();
-            }
-            else if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-                e.preventDefault();
-                undoAction();
-            }
-            else if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
-                e.preventDefault();
-                getHint();
-            }
-            else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                if (!currentSelectedCell) {
-                    selectCell(gridElement.children[0]);
-                    return;
-                }
-                const idx = parseInt(currentSelectedCell.dataset.index);
-                let nextIdx = idx;
-                if (e.key === 'ArrowUp') nextIdx -= 9;
-                if (e.key === 'ArrowDown') nextIdx += 9;
-                if (e.key === 'ArrowLeft') nextIdx -= 1;
-                if (e.key === 'ArrowRight') nextIdx += 1;
-
-                if (nextIdx >= 0 && nextIdx < 81) {
-                    selectCell(gridElement.children[nextIdx]);
-                }
-            }
+    function triggerWin() {
+        gameFinished = true; clearInterval(timerInterval);
+        document.getElementById('win-time').textContent = formatTime(timerSeconds);
+        winModal.classList.add('active');
+        Array.from(gridElement.children).forEach(c => {
+            c.classList.add('animate-grid-flash');
+            c.classList.remove('selected', 'highlight-crosshair', 'highlight-same-number');
         });
+    }
 
-        muatSoalHarianDariGithub();
-    </script>
+    function togglePause() {
+        if (gameFinished) return;
+        isPaused = !isPaused;
+        boardWrapper.classList.toggle('paused-board', isPaused);
+        pauseOverlay.classList.toggle('hidden', !isPaused);
+        pauseOverlay.classList.toggle('flex', isPaused);
+        document.getElementById('pause-btn-icon').textContent = isPaused ? 'play_arrow' : 'pause';
+    }
+
+    /* FEATURE MAYOR: DARK MODE ENGINE */
+    const darkModeBtn = document.getElementById('dark-mode-btn');
+    const darkModeIcon = document.getElementById('dark-mode-icon');
+    
+    function setDark(isDark) {
+        document.documentElement.classList.toggle('dark', isDark);
+        darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('theme') === 'dark') setDark(true);
+    darkModeBtn.addEventListener('click', () => setDark(!document.documentElement.classList.contains('dark')));
+
+    /* CORE UTILITIES */
+    function startTimer() { timerInterval = setInterval(() => { if (!isPaused && !gameFinished) { timerSeconds++; document.getElementById('timer').textContent = formatTime(timerSeconds); } }, 1000); }
+    function formatTime(s) { return `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`; }
+
+    // EVENT LISTENERS
+    document.querySelectorAll('.num-btn').forEach(b => b.addEventListener('click', () => inputNumber(b.dataset.value)));
+    document.getElementById('erase-btn').addEventListener('click', () => { if(currentSelectedCell && currentSelectedCell.dataset.fixed !== "true") { currentSelectedCell.textContent = ''; currentSelectedCell.classList.remove('error-state'); highlightCells(parseInt(currentSelectedCell.dataset.index)); } });
+    document.getElementById('undo-btn').addEventListener('click', () => { if(history.length > 0) { const l = history.pop(); const c = gridElement.children[l.index]; c.textContent = l.val; l.err ? c.classList.add('error-state') : c.classList.remove('error-state'); selectCell(c); } });
+    document.getElementById('hint-btn').addEventListener('click', () => {
+        if (hintOnCooldown || isPaused || gameFinished) return;
+        const empty = Array.from(gridElement.children).filter(c => !c.textContent && c.dataset.fixed !== "true");
+        if (empty.length > 0) {
+            const c = empty[0]; selectCell(c); inputNumber(c.dataset.correct);
+            hintOnCooldown = true; document.getElementById('hint-btn').disabled = true;
+            setTimeout(() => { hintOnCooldown = false; document.getElementById('hint-btn').disabled = false; }, 4000);
+        }
+    });
+
+    document.getElementById('pause-btn').addEventListener('click', togglePause);
+    document.getElementById('resume-btn').addEventListener('click', togglePause);
+    document.getElementById('tutorial-btn').addEventListener('click', () => { if(!isPaused) togglePause(); document.getElementById('tutorial-modal').classList.add('active'); });
+    document.getElementById('close-modal-top').addEventListener('click', () => { document.getElementById('tutorial-modal').classList.remove('active'); if(isPaused) togglePause(); });
+
+    muatSoalHarianDariGithub();
+</script>
 </body></html>
