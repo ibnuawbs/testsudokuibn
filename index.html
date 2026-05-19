@@ -3,7 +3,7 @@
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
 <title>Ibn Sudoku</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Metropolis:wght@600;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600&amp;family=Metropolis:wght=600;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -88,23 +88,20 @@
                         "status-label": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
                     },
                     "keyframes": {
-                        "cooldown": {
-                            "0%": { width: "0%" },
-                            "100%": { width: "100%" }
-                        },
-                        "fadeIn": {
-                            "0%": { opacity: "0" },
-                            "100%": { opacity: "1" }
-                        },
-                        "slideUp": {
-                            "0%": { transform: "translateY(20px)", opacity: "0" },
-                            "100%": { transform: "translateY(0)", opacity: "1" }
+                        "cooldown": { "0%": { width: "0%" }, "100%": { width: "100%" } },
+                        "fadeIn": { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
+                        "slideUp": { "0%": { transform: "translateY(20px)", opacity: "0" }, "100%": { transform: "translateY(0)", opacity: "1" } },
+                        "flashGlow": {
+                            "0%": { "backgroundColor": "rgba(34, 197, 94, 0.5)", "filter": "brightness(1.2)" },
+                            "50%": { "backgroundColor": "rgba(79, 70, 229, 0.4)", "filter": "brightness(1.4)" },
+                            "100%": { "filter": "brightness(1)" }
                         }
                     },
                     "animation": {
-                        "cooldown": "cooldown 1s linear",
+                        "cooldown": "cooldown 4s linear",
                         "fadeIn": "fadeIn 0.2s ease-out",
-                        "slideUp": "slideUp 0.3s ease-out"
+                        "slideUp": "slideUp 0.3s ease-out",
+                        "flash": "flashGlow 0.6s ease-in-out"
                     }
                 }
             }
@@ -120,7 +117,6 @@
         .block-border-right { border-right: 4px solid rgba(11, 28, 48, 0.15); }
         .block-border-bottom { border-bottom: 4px solid rgba(11, 28, 48, 0.15); }
 
-        /* FEATURE MAYOR: Engine Arsitektur Warna Dominan Cell & Highlight Sistem (Light/Dark Hierarki) */
         .cell {
             background-color: #f8f9ff;
             color: #0b1c30;
@@ -130,7 +126,7 @@
         .cell[data-fixed="true"] { color: #0b1c30; font-weight: 600; }
         .cell:not([data-fixed="true"]) { color: #3525cd; font-weight: 400; }
 
-        /* Setelan Highlight Light Mode */
+        /* Setup Highlight Warna versi Light Mode */
         .cell.highlight-crosshair { background-color: #dce9ff !important; }
         .cell.highlight-same-number { background-color: #a9beff !important; }
         .cell.selected { background-color: #3525cd !important; color: #ffffff !important; z-index: 10; }
@@ -150,14 +146,17 @@
         html.dark .block-border-right { border-right: 4px solid rgba(255, 255, 255, 0.12); }
         html.dark .block-border-bottom { border-bottom: 4px solid rgba(255, 255, 255, 0.12); }
 
-        /* Setelan Highlight Dark Mode (Aman, Lembut & Terbaca Jelas) */
+        /* Setup Highlight Lembut versi Dark Mode (Aman di Mata) */
         html.dark .cell { background-color: #1e293b; }
         html.dark .cell[data-fixed="true"] { color: #f1f5f9; }
-        html.dark .cell:not([data-fixed="true"]) { color: #818cf8; }
-        html.dark .cell.highlight-crosshair { background-color: #1e3a8a !important; } 
-        html.dark .cell.highlight-same-number { background-color: #2e466e !important; } 
+        html.dark .cell:not([data-fixed="true"]) { color: #ffffff; } /* Angka input user disamakan putih pekat */
+        html.dark .cell.highlight-crosshair { background-color: #243147 !important; } /* Crosshair lebih soft & match */
+        html.dark .cell.highlight-same-number { background-color: #334155 !important; } 
         html.dark .cell.selected { background-color: #4f46e5 !important; color: #ffffff !important; }
         html.dark .cell.error-state { background-color: #7f1d1d !important; color: #fca5a5 !important; }
+
+        /* FEATURE MAYOR: Utility Class untuk Menjalankan Animasi Kilatan Sukses */
+        .animate-grid-flash { animation: flashGlow 0.6s ease-in-out; }
 
         #hint-cooldown-bar { display: none; }
         #hint-btn:disabled #hint-cooldown-bar { display: block; }
@@ -182,6 +181,7 @@
 <header class="flex justify-between items-center px-container-padding w-full h-16 bg-surface dark:bg-background border-b border-outline-variant/10">
 <h1 class="text-on-surface dark:text-inverse-on-surface font-status-label font-semibold text-[24px] tracking-tight">Ibn Sudoku</h1>
 </header>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-status-label overflow-x-hidden transition-colors duration-200">
 <main class="flex-1 flex flex-col items-center justify-center p-4 max-w-[1200px] mx-auto w-full">
 <div class="w-full max-w-[500px] mb-4">
 <div class="flex justify-between items-center mb-2 px-1 gap-2">
@@ -195,9 +195,9 @@
 </button>
 </div>
 
-<!-- FEATURE MAYOR: Komponen Modifikasi Metadata Realtime (dd,mm,yyyy & Level Status Teks) -->
+<!-- Informasi Metadata Realtime (dd, Month yyyy & Level Teks) -->
 <div class="flex items-center gap-1.5 text-on-surface-variant font-status-label text-[12px] sm:text-[13px] bg-surface-container rounded-full px-3 py-1 font-medium overflow-hidden truncate">
-<span id="game-date-info">--,--,----</span>
+<span id="game-date-info">--, ---- ----</span>
 <span class="text-outline-variant/50">|</span>
 <span id="game-level-info">Level : easy</span>
 </div>
@@ -326,7 +326,6 @@
         let timerInterval = null;
         let gameFinished = false;
 
-        // FEATURE MAYOR: API Fetcher Data Soal dari Github & Pemrosesan Format Teks Header Atas
         async function muatSoalHarianDariGithub() {
             const busterCache = new Date().getTime();
             const urlRawGithub = `https://raw.githubusercontent.com/ibnuawbs/testsudokuibn/refs/heads/main/soal.json?v=${busterCache}`;
@@ -355,13 +354,11 @@
                     }
                 }
 
-                // Kalkulasi data tanggal (dd,mm,yyyy)
+                // FEATURE MAYOR: Parsing Format Tanggal Indonesia (dd, Month yyyy)
                 const hariStr = sekarang.getDate().toString().padStart(2, '0');
-                const bulanStr = (sekarang.getMonth() + 1).toString().padStart(2, '0');
-                const tahunStr = sekarang.getFullYear();
-                document.getElementById('game-date-info').textContent = `${hariStr},${bulanStr},${tahunStr}`;
+                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                document.getElementById('game-date-info').textContent = `${hariStr}, ${namaBulan[sekarang.getMonth()]} ${sekarang.getFullYear()}`;
 
-                // Kalkulasi konversi nilai level (integer ke label teks tingkat kesulitan)
                 const levelMap = { 1: 'easy', 2: 'medium', 3: 'hard', 4: 'expert', 5: 'master' };
                 const levelVal = soalHariIni ? soalHariIni.level : 1;
                 const levelText = levelMap[levelVal] || 'easy';
@@ -380,7 +377,9 @@
                 solution = [5,3,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,3,4,2,5,6,7,8,5,9,7,6,1,4,2,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,5,6,9,6,1,5,3,7,2,8,4,2,8,7,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
                 clues = [5,0,4,6,7,8,9,1,2,6,7,2,1,9,5,3,4,8,1,9,8,0,4,2,5,6,7,8,5,9,7,6,1,0,0,3,4,2,6,8,5,3,7,9,1,7,1,3,9,2,4,8,0,6,9,6,1,0,3,0,2,8,4,2,8,0,4,1,9,6,3,5,3,4,5,2,8,6,1,7,9];
                 
-                document.getElementById('game-date-info').textContent = `00,00,0000`;
+                const sekarang = new Date();
+                const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                document.getElementById('game-date-info').textContent = `${sekarang.getDate().toString().padStart(2, '0')}, ${namaBulan[sekarang.getMonth()]} ${sekarang.getFullYear()}`;
                 document.getElementById('game-level-info').textContent = `Level : easy`;
 
                 initGrid();
@@ -506,6 +505,57 @@
             }
         }
 
+        // FEATURE MAYOR: Engine Deteksi Penyelesaian Grup Linier & Sektoral (Kilatan Flash Animasi)
+        function periksaDanAnimasikanGrup(index) {
+            const row = Math.floor(index / 9);
+            const col = index % 9;
+            const boxRow = Math.floor(row / 3) * 3;
+            const boxCol = Math.floor(col / 3) * 3;
+            const cells = gridElement.children;
+
+            let rowBenar = true;
+            let colBenar = true;
+            let boxBenar = true;
+
+            for (let c = 0; c < 9; c++) {
+                const idx = row * 9 + c;
+                if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) rowBenar = false;
+            }
+
+            for (let r = 0; r < 9; r++) {
+                const idx = r * 9 + col;
+                if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) colBenar = false;
+            }
+
+            for (let r = 0; r < 3; r++) {
+                for (let c = 0; c < 3; c++) {
+                    const idx = (boxRow + r) * 9 + (boxCol + c);
+                    if (parseInt(cells[idx].textContent) !== parseInt(cells[idx].dataset.correct)) boxBenar = false;
+                }
+            }
+
+            if (rowBenar) {
+                for (let c = 0; c < 9; c++) jalankanEfekFlash(cells[row * 9 + c]);
+            }
+            if (colBenar) {
+                for (let r = 0; r < 9; r++) jalankanEfekFlash(cells[r * 9 + col]);
+            }
+            if (boxBenar) {
+                for (let r = 0; r < 3; r++) {
+                    for (let c = 0; c < 3; c++) {
+                        jalankanEfekFlash(cells[(boxRow + r) * 9 + (boxCol + c)]);
+                    }
+                }
+            }
+        }
+
+        function jalankanEfekFlash(cellElement) {
+            cellElement.classList.add('animate-grid-flash');
+            setTimeout(() => {
+                cellElement.classList.remove('animate-grid-flash');
+            }, 600);
+        }
+
         function checkWinCondition() {
             const cells = Array.from(gridElement.children);
             const isFullAndCorrect = cells.every(cell => {
@@ -527,6 +577,12 @@
             
             if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
             clearCrosshair();
+
+            // FEATURE MAYOR: Memicu Efek Animasi Kilatan Flash ke Seluruh Petak Papan Saat Menang Total
+            const cells = gridElement.children;
+            for (let i = 0; i < 81; i++) {
+                jalankanEfekFlash(cells[i]);
+            }
         }
 
         function inputNumber(val) {
@@ -541,6 +597,7 @@
             
             if (parseInt(val) === parseInt(currentSelectedCell.dataset.correct)) {
                 currentSelectedCell.classList.remove('error-state');
+                periksaAndAnimasikanGrup(index); 
                 checkWinCondition();
             } else {
                 currentSelectedCell.classList.add('error-state');
@@ -600,7 +657,7 @@
             setTimeout(() => {
                 hintOnCooldown = false;
                 hintBtn.disabled = false;
-            }, 1000);
+            }, 4000);
         }
 
         function showTutorial() {
@@ -608,7 +665,6 @@
             tutorialModal.classList.add('active');
         }
 
-        // FEATURE MAYOR: Logika Mutasi State & Engine Pengendali Mode Gelap (Dark Mode)
         const darkModeBtn = document.getElementById('dark-mode-btn');
         const darkModeIcon = document.getElementById('dark-mode-icon');
 
