@@ -33,7 +33,6 @@
         }
     </script>
 <style>
-        /* PROTEKSI FONT & IKON GLOBAL */
         body, button, span, div, h1, h2, h3 { font-family: 'Inter', sans-serif !important; }
         .material-symbols-outlined {
             font-family: 'Material Symbols Outlined' !important;
@@ -56,7 +55,7 @@
         .cell.selected { background-color: #3525cd !important; color: #ffffff !important; z-index: 10; }
         .cell.error-state { background-color: #ba1a1a !important; color: #ffffff !important; z-index: 10; }
 
-        /* PREMUM SOFT DARK MODE (SLATE THEME) */
+        /* PREMIUM SOFT DARK MODE (SLATE THEME) */
         html.dark body { background-color: #0f172a !important; color: #cbd5e1 !important; }
         html.dark header { background-color: #0f172a !important; }
         html.dark .bg-surface-container-lowest { background-color: #1e293b !important; }
@@ -149,17 +148,18 @@
             <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="8">8</button>
             <button class="num-btn aspect-square flex items-center justify-center rounded-xl bg-surface-container text-primary font-bold text-[22px] hover:bg-primary hover:text-white transition-all active:scale-90" data-value="9">9</button>
         </div>
-        <div class="flex justify-between items-center bg-surface-container rounded-2xl p-2 gap-3 shadow-inner">
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl" id="undo-btn">
+        
+        <div class="flex justify-between items-center bg-surface-container rounded-2xl p-1.5 shadow-inner divide-x divide-outline-variant/60 dark:divide-slate-600/60">
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-l-xl" id="undo-btn">
                 <span class="material-symbols-outlined">undo</span>
                 <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Undo</span>
             </button>
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl" id="erase-btn">
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95" id="erase-btn">
                 <span class="material-symbols-outlined">backspace</span>
                 <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Erase</span>
             </button>
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-xl relative overflow-hidden group disabled:opacity-50" id="hint-btn">
-                <div class="absolute bottom-0 left-0 h-1 bg-primary/40 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-r-xl relative overflow-hidden group disabled:opacity-70" id="hint-btn">
+                <div class="absolute bottom-0 left-0 h-1 bg-primary/60 dark:bg-indigo-400 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
                 <span class="material-symbols-outlined">lightbulb</span>
                 <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Hint</span>
             </button>
@@ -368,12 +368,19 @@
     document.querySelectorAll('.num-btn').forEach(b => b.addEventListener('click', () => inputNumber(b.dataset.value)));
     document.getElementById('erase-btn').addEventListener('click', () => { if(currentSelectedCell && currentSelectedCell.dataset.fixed !== "true") { currentSelectedCell.textContent = ''; currentSelectedCell.classList.remove('error-state'); highlightCells(parseInt(currentSelectedCell.dataset.index)); } });
     document.getElementById('undo-btn').addEventListener('click', () => { if(history.length > 0) { const l = history.pop(); const c = gridElement.children[l.index]; c.textContent = l.val; l.err ? c.classList.add('error-state') : c.classList.remove('error-state'); selectCell(c); } });
+    
+    // FEATURE MAYOR: Logika Tombol Hint Berbasis Petak Yang Dipilih Aktif (Bukan Auto Petak Kosong)
     document.getElementById('hint-btn').addEventListener('click', () => {
         if (hintOnCooldown || isPaused || gameFinished) return;
-        const empty = Array.from(gridElement.children).filter(c => !c.textContent && c.dataset.fixed !== "true");
-        if (empty.length > 0) {
-            const c = empty[0]; selectCell(c); inputNumber(c.dataset.correct);
-            hintOnCooldown = true; document.getElementById('hint-btn').disabled = true;
+        
+        // Hint hanya merespons jika user memilih petak kosong yang bukan bawaan (fixed)
+        if (currentSelectedCell && currentSelectedCell.dataset.fixed !== "true") {
+            // Jika petak sudah diisi dengan angka yang benar, jangan konsumsi cooldown hint
+            if (parseInt(currentSelectedCell.textContent) === parseInt(currentSelectedCell.dataset.correct)) return;
+            
+            inputNumber(currentSelectedCell.dataset.correct);
+            hintOnCooldown = true; 
+            document.getElementById('hint-btn').disabled = true;
             setTimeout(() => { hintOnCooldown = false; document.getElementById('hint-btn').disabled = false; }, 4000);
         }
     });
