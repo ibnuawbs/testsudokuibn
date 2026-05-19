@@ -3,7 +3,7 @@
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
 <title>Ibn Sudoku</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600&amp;family=Metropolis:wght=600;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -72,12 +72,12 @@
                         "block-gap": "4px"
                     },
                     "fontFamily": {
-                        "cell-input": ["Inter"],
-                        "button-label": ["Inter"],
-                        "cell-note": ["Inter"],
-                        "display-game-number": ["Metropolis"],
-                        "cell-fixed": ["Inter"],
-                        "status-label": ["Inter"]
+                        "cell-input": ["Inter", "sans-serif"],
+                        "button-label": ["Inter", "sans-serif"],
+                        "cell-note": ["Inter", "sans-serif"],
+                        "display-game-number": ["Inter", "sans-serif"],
+                        "cell-fixed": ["Inter", "sans-serif"],
+                        "status-label": ["Inter", "sans-serif"]
                     },
                     "fontSize": {
                         "cell-input": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
@@ -108,9 +108,20 @@
         }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        /* FEATURE MAYOR: Proteksi Font Inter Global & Perbaikan Google Material Icons */
+        body, button, span, div, h1, h2, h3 {
+            font-family: 'Inter', sans-serif !important;
         }
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined' !important;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            width: 24px;
+            height: 24px;
+            overflow: hidden;
+        }
+        
         .sudoku-grid-container {
             aspect-ratio: 1 / 1;
         }
@@ -121,18 +132,15 @@
             background-color: #f8f9ff;
             color: #0b1c30;
             font-size: 24px !important;
-            font-family: 'Inter', sans-serif !important;
         }
         .cell[data-fixed="true"] { color: #0b1c30; font-weight: 600; }
         .cell:not([data-fixed="true"]) { color: #3525cd; font-weight: 400; }
 
-        /* Setup Highlight Warna versi Light Mode */
         .cell.highlight-crosshair { background-color: #dce9ff !important; }
         .cell.highlight-same-number { background-color: #a9beff !important; }
         .cell.selected { background-color: #3525cd !important; color: #ffffff !important; z-index: 10; }
         .cell.error-state { background-color: #ba1a1a !important; color: #ffffff !important; z-index: 10; }
 
-        /* FEATURE MAYOR: Kalibrasi Warna Premium Soft Night Mode (Anti-Sakit Mata) */
         html.dark body { background-color: #0f172a !important; color: #cbd5e1 !important; }
         html.dark header { background-color: #0f172a !important; }
         html.dark .bg-surface-container-lowest { background-color: #1e293b !important; }
@@ -146,16 +154,14 @@
         html.dark .block-border-right { border-right: 4px solid rgba(255, 255, 255, 0.12); }
         html.dark .block-border-bottom { border-bottom: 4px solid rgba(255, 255, 255, 0.12); }
 
-        /* Setup Highlight Lembut versi Dark Mode (Aman di Mata) */
         html.dark .cell { background-color: #1e293b; }
         html.dark .cell[data-fixed="true"] { color: #f1f5f9; }
-        html.dark .cell:not([data-fixed="true"]) { color: #ffffff; } /* Angka input user disamakan putih pekat */
-        html.dark .cell.highlight-crosshair { background-color: #243147 !important; } /* Crosshair lebih soft & match */
+        html.dark .cell:not([data-fixed="true"]) { color: #ffffff; } 
+        html.dark .cell.highlight-crosshair { background-color: #243147 !important; } 
         html.dark .cell.highlight-same-number { background-color: #334155 !important; } 
         html.dark .cell.selected { background-color: #4f46e5 !important; color: #ffffff !important; }
         html.dark .cell.error-state { background-color: #7f1d1d !important; color: #fca5a5 !important; }
 
-        /* FEATURE MAYOR: Utility Class untuk Menjalankan Animasi Kilatan Sukses */
         .animate-grid-flash { animation: flashGlow 0.6s ease-in-out; }
 
         #hint-cooldown-bar { display: none; }
@@ -179,36 +185,33 @@
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col font-status-label overflow-x-hidden transition-colors duration-200">
 <header class="flex justify-between items-center px-container-padding w-full h-16 bg-surface dark:bg-background border-b border-outline-variant/10">
-<h1 class="text-on-surface dark:text-inverse-on-surface font-status-label font-semibold text-[24px] tracking-tight">Ibn Sudoku</h1>
+<h1 class="text-on-surface dark:text-inverse-on-surface font-semibold text-[24px] tracking-tight">Ibn Sudoku</h1>
 </header>
-<body class="bg-background text-on-background min-h-screen flex flex-col font-status-label overflow-x-hidden transition-colors duration-200">
 <main class="flex-1 flex flex-col items-center justify-center p-4 max-w-[1200px] mx-auto w-full">
 <div class="w-full max-w-[500px] mb-4">
-<div class="flex justify-between items-center mb-2 px-1 gap-2">
+<div class="flex justify-between items-center mb-3 px-1 gap-2 w-full">
 <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-<div class="flex items-center gap-1.5 sm:gap-2 text-on-surface-variant font-status-label text-[13px] sm:text-status-label bg-surface-container rounded-full px-2.5 py-1">
-<span class="material-symbols-outlined text-[16px] sm:text-[18px]">timer</span>
+<div class="flex items-center gap-1 sm:gap-1.5 text-on-surface-variant text-[13px] sm:text-status-label bg-surface-container rounded-full px-2.5 py-1">
+<span class="material-symbols-outlined text-[18px]">timer</span>
 <span id="timer">00:00</span>
 </div>
-<button class="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="pause-btn" title="Pause Game">
-<span class="material-symbols-outlined text-[18px] sm:text-[20px]" id="pause-btn-icon">pause</span>
+<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="pause-btn" title="Pause Game">
+<span class="material-symbols-outlined text-[20px]" id="pause-btn-icon">pause</span>
 </button>
 </div>
 
-<!-- Informasi Metadata Realtime (dd, Month yyyy & Level Teks) -->
-<div class="flex items-center gap-1.5 text-on-surface-variant font-status-label text-[12px] sm:text-[13px] bg-surface-container rounded-full px-3 py-1 font-medium overflow-hidden truncate">
+<div class="flex items-center gap-1 sm:gap-1.5 text-on-surface-variant text-[12px] sm:text-[13px] bg-surface-container rounded-full px-3 py-1 font-medium overflow-hidden truncate">
 <span id="game-date-info">--, ---- ----</span>
 <span class="text-outline-variant/50">|</span>
 <span id="game-level-info">Level : easy</span>
 </div>
 
 <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-<button class="flex items-center gap-1 px-2.5 h-7 sm:h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="tutorial-btn">
-<span class="material-symbols-outlined text-[18px]">help_outline</span>
-<span class="font-status-label text-[12px] sm:text-status-label hidden xs:inline">Tutorial</span>
+<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="tutorial-btn" title="Tutorial">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
 </button>
-<button class="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="dark-mode-btn" title="Toggle Dark Mode">
-<span class="material-symbols-outlined text-[18px] sm:text-[20px]" id="dark-mode-icon">dark_mode</span>
+<button class="flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-90" id="dark-mode-btn" title="Toggle Dark Mode">
+<span class="material-symbols-outlined text-[20px]" id="dark-mode-icon">dark_mode</span>
 </button>
 </div>
 </div>
@@ -221,9 +224,9 @@
 <div class="bg-surface-container-lowest p-8 rounded-2xl shadow-xl flex flex-col items-center gap-6 border border-outline-variant animate-slideUp">
 <div class="flex flex-col items-center gap-2">
 <span class="material-symbols-outlined text-primary text-5xl">pause_circle</span>
-<h3 class="font-display-game-number text-2xl text-on-surface">Game Paused</h3>
+<h3 class="text-2xl text-on-surface font-semibold">Game Paused</h3>
 </div>
-<button class="bg-primary hover:bg-primary/90 text-on-primary px-10 py-3 rounded-full font-button-label text-button-label transition-all active:scale-95 shadow-md flex items-center gap-2" id="resume-btn">
+<button class="bg-primary hover:bg-primary/90 text-on-primary px-10 py-3 rounded-full font-medium transition-all active:scale-95 shadow-md flex items-center gap-2" id="resume-btn">
 <span class="material-symbols-outlined">play_arrow</span>
                             Resume
                         </button>
@@ -233,29 +236,29 @@
 </div>
 <div class="w-full max-w-[500px] flex flex-col gap-4">
 <div class="grid grid-cols-9 gap-2" id="number-pad">
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="1">1</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="2">2</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="3">3</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="4">4</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="5">5</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="6">6</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="7">7</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="8">8</button>
-<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-display-game-number text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="9">9</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="1">1</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="2">2</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="3">3</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="4">4</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="5">5</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="6">6</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="7">7</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="8">8</button>
+<button class="num-btn aspect-square flex items-center justify-center rounded-lg bg-surface-container-high text-primary font-semibold text-[20px] hover:bg-primary hover:text-on-primary transition-all active:scale-90" data-value="9">9</button>
 </div>
 <div class="flex justify-between items-center bg-surface-container-low rounded-xl p-2 gap-4">
 <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl" id="undo-btn">
 <span class="material-symbols-outlined">undo</span>
-<span class="font-status-label text-[12px] mt-0.5">Undo</span>
+<span class="text-[12px] font-medium mt-0.5">Undo</span>
 </button>
 <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl" id="erase-btn">
 <span class="material-symbols-outlined">backspace</span>
-<span class="font-status-label text-[12px] mt-0.5">Erase</span>
+<span class="text-[12px] font-medium mt-0.5">Erase</span>
 </button>
 <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-surface-container-high transition-all active:scale-95 duration-150 bg-surface-container-lowest shadow-sm rounded-xl relative overflow-hidden group disabled:bg-surface-dim disabled:text-outline disabled:cursor-not-allowed" id="hint-btn">
 <div class="absolute bottom-0 left-0 h-1 bg-primary/30 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
 <span class="material-symbols-outlined">lightbulb</span>
-<span class="font-status-label text-[12px] mt-0.5">Hint</span>
+<span class="text-[12px] font-medium mt-0.5">Hint</span>
 </button>
 </div>
 </div>
@@ -263,7 +266,7 @@
 <div class="modal-overlay items-center justify-center p-4 animate-fadeIn" id="tutorial-modal">
 <div class="bg-surface-container-lowest max-w-[480px] w-full rounded-2xl shadow-xl overflow-hidden animate-slideUp flex flex-col">
 <div class="p-6 border-b border-outline-variant flex justify-between items-center">
-<h2 class="font-display-game-number text-2xl text-on-surface">How to Play Sudoku</h2>
+<h2 class="text-2xl text-on-surface font-bold">How to Play Sudoku</h2>
 <button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-90" id="close-modal-top">
 <span class="material-symbols-outlined text-[28px]">close</span>
 </button>
@@ -293,12 +296,12 @@
 <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
 <span class="material-symbols-outlined text-primary text-5xl">workspace_premium</span>
 </div>
-<h2 class="font-display-game-number text-3xl text-on-surface mb-2">Congratulations!</h2>
+<h2 class="text-3xl text-on-surface mb-2 font-bold">Congratulations!</h2>
 <p class="text-on-surface-variant mb-6">You solved today's puzzle in <span class="font-bold text-primary" id="win-time">00:00</span>.</p>
 <div class="bg-surface-container p-4 rounded-xl mb-8 w-full">
 <p class="text-on-surface font-medium text-sm">Come back tomorrow for a new puzzle!</p>
 </div>
-<button class="w-full bg-primary hover:bg-primary/90 text-on-primary px-8 py-4 rounded-full font-button-label text-button-label transition-all active:scale-95 shadow-md flex items-center justify-center gap-3" id="other-games-btn">
+<button class="w-full bg-primary hover:bg-primary/90 text-on-primary px-8 py-4 rounded-full font-medium transition-all active:scale-95 shadow-md flex items-center justify-center gap-3" id="other-games-btn">
 <span class="material-symbols-outlined">casino</span>
             Play Our Other Daily Games
         </button>
@@ -354,7 +357,6 @@
                     }
                 }
 
-                // FEATURE MAYOR: Parsing Format Tanggal Indonesia (dd, Month yyyy)
                 const hariStr = sekarang.getDate().toString().padStart(2, '0');
                 const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
                 document.getElementById('game-date-info').textContent = `${hariStr}, ${namaBulan[sekarang.getMonth()]} ${sekarang.getFullYear()}`;
@@ -470,6 +472,7 @@
             highlightCrosshair(parseInt(cell.dataset.index));
         }
 
+        // FEATURE MAYOR: Logika Crosshair & Seleksi Angka Kembar
         function highlightCrosshair(index) {
             if (isPaused || gameFinished) return;
             const row = Math.floor(index / 9);
@@ -505,7 +508,6 @@
             }
         }
 
-        // FEATURE MAYOR: Engine Deteksi Penyelesaian Grup Linier & Sektoral (Kilatan Flash Animasi)
         function periksaDanAnimasikanGrup(index) {
             const row = Math.floor(index / 9);
             const col = index % 9;
@@ -578,7 +580,6 @@
             if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
             clearCrosshair();
 
-            // FEATURE MAYOR: Memicu Efek Animasi Kilatan Flash ke Seluruh Petak Papan Saat Menang Total
             const cells = gridElement.children;
             for (let i = 0; i < 81; i++) {
                 jalankanEfekFlash(cells[i]);
@@ -597,7 +598,7 @@
             
             if (parseInt(val) === parseInt(currentSelectedCell.dataset.correct)) {
                 currentSelectedCell.classList.remove('error-state');
-                periksaAndAnimasikanGrup(index); 
+                periksaDanAnimasikanGrup(index); 
                 checkWinCondition();
             } else {
                 currentSelectedCell.classList.add('error-state');
@@ -665,15 +666,17 @@
             tutorialModal.classList.add('active');
         }
 
+        // FEATURE MAYOR: Engine Pengendali Mode Gelap & Manajemen Default Tema (Light Mode Utama)
         const darkModeBtn = document.getElementById('dark-mode-btn');
         const darkModeIcon = document.getElementById('dark-mode-icon');
 
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.classList.add('dark');
             darkModeIcon.textContent = 'light_mode';
         } else {
             document.documentElement.classList.remove('dark');
             darkModeIcon.textContent = 'dark_mode';
+            localStorage.setItem('theme', 'light'); 
         }
 
         darkModeBtn.addEventListener('click', () => {
