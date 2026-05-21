@@ -1,3 +1,10 @@
+Satu analisis yang sangat teliti! Masalah pembatas luar (*outer border container*) yang memotong highlight vertikal di baris paling atas dan paling bawah kini sudah diselesaikan secara permanen dengan memindahkan sistem pewarnaan langsung ke dalam grid mandiri.
+
+Selain itu, durasi *hint cooldown* telah ditingkatkan secara menyeluruh dari 4 detik menjadi **10 detik**, baik pada logika sistem *engine* maupun deskripsi tekstual di dalam panduan tutorial Inggrisnya.
+
+Berikut adalah kode lengkap terbarunya:
+
+```html
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
@@ -25,7 +32,8 @@
                         }
                     },
                     "animation": {
-                        "cooldown": "cooldown 4s linear",
+                        // Cooldown animation updated to 10s duration
+                        "cooldown": "cooldown 10s linear",
                         "flash": "flashGlow 0.6s ease-in-out"
                     }
                 }
@@ -193,9 +201,9 @@
                     <div class="grid grid-cols-3 grid-rows-3 gap-0.5 h-full w-full">
                         
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
-                            <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell diag-fixed">5</div>
-                            <div class="diag-cell"></div><div class="diag-cell diag-fixed">2</div><div class="diag-cell"></div>
-                            <div class="diag-cell diag-fixed">1</div><div class="diag-cell"></div><div class="diag-cell"></div>
+                            <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 font-bold">5</div>
+                            <div class="diag-cell"></div><div class="diag-cell diag-fixed">2</div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
+                            <div class="diag-cell diag-fixed">1</div><div class="diag-cell"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
                         </div>
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
@@ -270,7 +278,7 @@
                 </div>
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</span>
-                    <p class="text-sm leading-relaxed dark:text-slate-300">Stuck on a grid? Use the <b>Hint</b> button to reveal the answer, but be aware of the 4-second delay penalty!</p>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Stuck on a grid? Use the <b>Hint</b> button to reveal the answer, but be aware of the 10-second delay penalty!</p>
                 </div>
             </div>
         </div>
@@ -470,7 +478,7 @@
     function startTimer() { timerInterval = setInterval(() => { if (!isPaused && !gameFinished) { timerSeconds++; document.getElementById('timer').textContent = formatTime(timerSeconds); } }, 1000); }
     function formatTime(s) { return `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`; }
 
-    // KEYBOARD NAVIGATION
+    // KEYBOARD INTERACTION SYSTEM
     document.addEventListener('keydown', (e) => {
         if (isPaused || gameFinished) return;
 
@@ -502,18 +510,19 @@
         }
     });
 
-    // EVENT LISTENERS
+    // EVENT LISTENERS UI
     document.querySelectorAll('.num-btn').forEach(b => b.addEventListener('click', () => inputNumber(b.dataset.value)));
     document.getElementById('erase-btn').addEventListener('click', hapusAngkaPilihan);
     document.getElementById('undo-btn').addEventListener('click', () => { if(history.length > 0) { const l = history.pop(); const c = gridElement.children[l.index]; c.textContent = l.val; l.err ? c.classList.add('error-state') : c.classList.remove('error-state'); selectCell(c); } });
     
+    // BUGFIX: Engine logic timeout changed to 10 seconds (10000ms)
     document.getElementById('hint-btn').addEventListener('click', () => {
         if (hintOnCooldown || isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
         if (parseInt(currentSelectedCell.textContent) === parseInt(currentSelectedCell.dataset.correct)) return;
         
         inputNumber(currentSelectedCell.dataset.correct);
         hintOnCooldown = true; document.getElementById('hint-btn').disabled = true;
-        setTimeout(() => { hintOnCooldown = false; document.getElementById('hint-btn').disabled = false; }, 4000);
+        setTimeout(() => { hintOnCooldown = false; document.getElementById('hint-btn').disabled = false; }, 10000);
     });
 
     document.getElementById('pause-btn').addEventListener('click', togglePause);
