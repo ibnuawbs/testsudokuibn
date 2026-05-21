@@ -72,6 +72,8 @@
         html.dark .cell { background-color: #1e1e1e; color: #e2e8f0; }
         html.dark .cell[data-fixed="true"] { color: #e2e8f0; font-weight: 600; }
         html.dark .cell:not([data-fixed="true"]) { color: #bfdbfe; } 
+        
+        /* FIX: Ensure keypad digits text turn crisp white on dark mode */
         html.dark #number-pad .num-btn { color: #ffffff !important; }
 
         html.dark .cell.highlight-crosshair { background-color: #334155 !important; } 
@@ -87,26 +89,34 @@
         .modal-overlay.active { display: flex; }
         .paused-board { filter: blur(8px); pointer-events: none; }
 
-        /* RE-ENGINEERED PERFECT 9x9 MUTABLE TUTORIAL GRAPHIC */
-        .tutorial-table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; border: 3px solid #000000; }
+        /* NATIVE STABLE TABLE TUTORIAL GRID SYSTEM */
+        .tutorial-table { width: 100%; height: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; border: 3px solid #000000; }
         html.dark .tutorial-table { border-color: #e2e8f0; }
         
         .t-cell { text-align: center; vertical-align: middle; font-size: 13px; font-weight: 500; color: #000000; background-color: #ffffff; border: 1px solid #cbd5e1; }
         html.dark .t-cell { color: #e2e8f0; background-color: #1e1e1e; border-color: #475569; }
         
-        /* Inner 3x3 Grid Bold Partitions */
-        .tb-r { border-right: 3px solid #000000 !important; }
-        .tb-b { border-bottom: 3px solid #000000 !important; }
-        html.dark .tb-r { border-right: 3px solid #e2e8f0 !important; }
-        html.dark .tb-b { border-bottom: 3px solid #e2e8f0 !important; }
+        /* INNER 3X3 GRID BOLD PARTITIONS (CORRECTION) */
+        .tutorial-table td:nth-child(3) { border-right-width: 3px !important; border-right-color: #000000 !important; }
+        .tutorial-table td:nth-child(6) { border-right-width: 3px !important; border-right-color: #000000 !important; }
+        .tutorial-table tr:nth-child(3) td { border-bottom-width: 3px !important; border-bottom-color: #000000 !important; }
+        .tutorial-table tr:nth-child(6) td { border-bottom-width: 3px !important; border-bottom-color: #000000 !important; }
+        
+        html.dark .tutorial-table td:nth-child(3) { border-right-color: #e2e8f0 !important; }
+        html.dark .tutorial-table td:nth-child(6) { border-right-color: #e2e8f0 !important; }
+        html.dark .tutorial-table tr:nth-child(3) td { border-bottom-color: #e2e8f0 !important; }
+        html.dark .tutorial-table tr:nth-child(6) td { border-bottom-color: #e2e8f0 !important; }
 
-        /* STRICT LIGHT MODE SOLID HIGHLIGHT PROPERTIES */
+        /* PROPORSIS SEL SERAGAM DAN PROPORSI BUJUR SANGKAR PERMANEN (CORRECTION) */
+        .tutorial-table td { width: 11.11%; height: 11.11%; aspect-ratio: 1/1; }
+
+        /* LIGHT MODE HIGH CONTRAST SOLID DIAGRAM HIGHLIGHTS */
         .th-row { background-color: #cbd5e1 !important; color: #000000 !important; }
         .th-col { background-color: #bfdbfe !important; color: #1e3a8a !important; }
         .th-sub { background-color: #a7f3d0 !important; color: #064e3b !important; }
         .th-target { background-color: #f59e0b !important; color: #ffffff !important; font-weight: 700; }
 
-        /* STRICT DARK MODE SOLID HIGHLIGHT PROPERTIES */
+        /* DARK MODE HIGH CONTRAST SOLID DIAGRAM HIGHLIGHTS */
         html.dark .th-row { background-color: #475569 !important; color: #e2e8f0 !important; }
         html.dark .th-col { background-color: #1e3a8a !important; color: #bfdbfe !important; }
         html.dark .th-sub { background-color: #065f46 !important; color: #a7f3d0 !important; }
@@ -219,12 +229,12 @@
         <div class="p-6 overflow-y-auto max-h-[70vh] space-y-6">
             
             <div class="flex flex-col items-center gap-4">
-                <div class="w-full max-w-[310px] aspect-square rounded-xl overflow-hidden shadow-lg">
+                <div class="w-full max-w-[310px] aspect-square rounded-xl overflow-hidden shadow-lg border: 2px solid black;">
                     <table class="tutorial-table">
                         <tr>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
-                            <td class="t-cell th-col font-bold">5</td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell tb-r th-col font-bold">5</td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell tb-r"></td>
@@ -234,8 +244,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r font-bold">2</td>
-                            <td class="t-cell th-col"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell tb-r th-col font-bold">2</td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell tb-r"></td>
@@ -245,8 +255,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell tb-b font-bold">1</td>
-                            <td class="t-cell tb-b tb-r"></td>
-                            <td class="t-cell tb-b th-col"></td>
+                            <td class="t-cell tb-b"></td>
+                            <td class="t-cell tb-b tb-r th-col"></td>
                             <td class="t-cell tb-b"></td>
                             <td class="t-cell tb-b"></td>
                             <td class="t-cell tb-b tb-r"></td>
@@ -256,8 +266,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell th-sub"></td>
-                            <td class="t-cell tb-r th-sub"></td>
-                            <td class="t-cell th-target">3</td>
+                            <td class="t-cell th-sub"></td>
+                            <td class="t-cell tb-r th-target">3</td>
                             <td class="t-cell th-row"></td>
                             <td class="t-cell th-row"></td>
                             <td class="t-cell tb-r th-row"></td>
@@ -267,8 +277,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell th-sub"></td>
-                            <td class="t-cell tb-r th-sub"></td>
-                            <td class="t-cell th-col"></td>
+                            <td class="t-cell th-sub"></td>
+                            <td class="t-cell tb-r th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell tb-r"></td>
@@ -278,8 +288,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell tb-b th-sub"></td>
-                            <td class="t-cell tb-b tb-r th-sub"></td>
-                            <td class="t-cell tb-b th-col"></td>
+                            <td class="t-cell tb-b th-sub"></td>
+                            <td class="t-cell tb-b tb-r th-col"></td>
                             <td class="t-cell tb-b"></td>
                             <td class="t-cell tb-b font-bold">6</td>
                             <td class="t-cell tb-b tb-r"></td>
@@ -289,8 +299,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
-                            <td class="t-cell th-col"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell tb-r th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell tb-r"></td>
@@ -300,8 +310,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell font-bold">9</td>
-                            <td class="t-cell tb-r"></td>
-                            <td class="t-cell th-col"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell tb-r th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell font-bold">8</td>
                             <td class="t-cell tb-r"></td>
@@ -311,8 +321,8 @@
                         </tr>
                         <tr>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
-                            <td class="t-cell th-col"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell tb-r th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell tb-r"></td>
@@ -337,15 +347,15 @@
                     <p class="text-sm leading-relaxed dark:text-slate-300">Each <b class="text-indigo-600 dark:text-indigo-400">Row</b>, <b class="text-blue-600 dark:text-blue-400">Column</b>, and <b class="text-emerald-600 dark:text-emerald-400">Subgrid 3x3</b> box must contain unique numbers from 1 to 9 without repetition.</p>
                 </div>
                 <div class="flex gap-4">
-                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">2</span>
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex tumors items-center justify-center font-bold text-sm">2</span>
                     <p class="text-sm leading-relaxed dark:text-slate-300">Tap an empty cell on the board to select it, then choose a number from the number pad below to input your move.</p>
                 </div>
                 <div class="flex gap-4">
-                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</span>
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex tumors items-center justify-center font-bold text-sm">3</span>
                     <p class="text-sm leading-relaxed dark:text-slate-300">Errors are hidden by default! Use the <b>Wrong Answer</b> button (10s cooldown) to temporarily highlight your mistakes on the board in red.</p>
                 </div>
                 <div class="flex gap-4">
-                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">4</span>
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex tumors items-center justify-center font-bold text-sm">4</span>
                     <p class="text-sm leading-relaxed dark:text-slate-300">Stuck on a grid? Use the <b>Hint</b> button to reveal the correct digit, featuring a 10-second penalty cooldown.</p>
                 </div>
             </div>
