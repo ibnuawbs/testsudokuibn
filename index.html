@@ -81,16 +81,15 @@
         .modal-overlay.active { display: flex; }
         .paused-board { filter: blur(8px); pointer-events: none; }
 
-        /* CSS Sudoku Diagram for Tutorial */
-        .tutorial-diagram-cell { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border: 1px solid #c7c4d8; font-weight: bold; color: #0b1c30; background-color: #f8f9ff; }
-        html.dark .tutorial-diagram-cell { border-color: #334155; color: #f1f5f9; background-color: #1e293b; }
-        
-        /* Highlight styles */
-        .tutorial-highlight-block { background-color: rgba(53, 37, 205, 0.15) !important; }
-        .tutorial-highlight-row-col { background-color: rgba(53, 37, 205, 0.08) !important; }
-        .tutorial-fixed-cell { font-weight: bold; color: #3525cd !important; }
-        html.dark .tutorial-fixed-cell { color: #4f46e5 !important; }
+        /* DIAGRAM SYSTEM FOR TUTORIAL */
+        .diag-cell { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; background-color: #ffffff; color: #0b1c30; }
+        html.dark .diag-cell { background-color: #1e293b; color: #f1f5f9; }
+        .diag-fixed { font-weight: 700; color: #000000; }
+        html.dark .diag-fixed { color: #ffffff; }
 
+        /* Thick inner borders for 3x3 blocks in tutorial */
+        .diag-br { border-right: 2px solid #475569 !important; }
+        .diag-bb { border-bottom: 2px solid #475569 !important; }
     </style>
 </head>
 <body class="bg-background text-on-background min-h-screen flex flex-col overflow-x-hidden transition-colors duration-200">
@@ -131,7 +130,7 @@
             </div>
             
             <div class="absolute inset-0 z-20 hidden flex-col items-center justify-center bg-slate-900/10 rounded-xl backdrop-blur-[3px]" id="pause-overlay">
-                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl flex flex-col items-center gap-5 border border-outline-variant/20 animate-slideUp">
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl flex flex-col items-center gap-5 border border-outline-variant/20">
                     <div class="flex flex-col items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-6xl !w-16 !h-16 flex items-center justify-center">pause_circle</span>
                         <h3 class="text-2xl text-on-surface dark:text-white font-bold">Game Paused</h3>
@@ -184,7 +183,7 @@
 </main>
 
 <div class="modal-overlay items-center justify-center p-4 transition-opacity duration-300" id="tutorial-modal">
-    <div class="bg-white dark:bg-slate-800 max-w-[480px] w-full rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-outline-variant/30 dark:border-slate-700 animate-slideUp">
+    <div class="bg-white dark:bg-slate-800 max-w-[500px] w-full rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-outline-variant/30 dark:border-slate-700 animate-slideUp">
         <div class="p-6 border-b border-outline-variant/30 dark:border-slate-700 flex justify-between items-center">
             <h2 class="text-xl font-bold dark:text-white">How to Play Sudoku</h2>
             <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white transition-all" id="close-modal-top">
@@ -193,33 +192,52 @@
         </div>
         <div class="p-6 overflow-y-auto max-h-[70vh] space-y-6">
             
-            <div class="aspect-square bg-white dark:bg-slate-900 border-4 border-outline-variant dark:border-slate-700 rounded-2xl overflow-hidden p-2 shadow-inner">
-                <div class="grid grid-cols-9 grid-rows-9 gap-px h-full w-full bg-outline-variant dark:bg-slate-700">
-                    
-                    <div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-highlight-block"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-fixed-cell">5</div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell tutorial-highlight-block tutorial-fixed-cell">2</div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell tutorial-fixed-cell">1</div><div class="tutorial-diagram-cell tutorial-highlight-block"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-block tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-fixed-cell">3</div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-fixed-cell">8</div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div>
-                    <div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell tutorial-highlight-block"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-block tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-fixed-cell">6</div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div><div class="tutorial-diagram-cell tutorial-highlight-row-col tutorial-fixed-cell">1</div><div class="tutorial-diagram-cell tutorial-highlight-row-col"></div>
-                    <div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell hover:tutorial-highlight-block transition-colors cursor-pointer tutorial-fixed-cell">4</div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell tutorial-fixed-cell">9</div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell hover:tutorial-highlight-block transition-colors cursor-pointer"></div><div class="tutorial-diagram-cell tutorial-fixed-cell">8</div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
-                    <div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell hover:tutorial-highlight-block transition-colors cursor-pointer"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell tutorial-fixed-cell">7</div><div class="tutorial-diagram-cell"></div><div class="tutorial-diagram-cell"></div>
+            <div class="flex flex-col items-center gap-4">
+                <div class="w-full max-w-[320px] aspect-square bg-slate-200 dark:bg-slate-700 p-1 rounded-xl shadow-md">
+                    <div class="grid grid-cols-9 grid-rows-9 gap-px h-full w-full bg-slate-300 dark:bg-slate-600">
+                        <div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br">5</div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
+                        <div class="diag-cell diag-br"></div><div class="diag-cell diag-br diag-fixed">2</div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
+                        <div class="diag-cell diag-bb diag-br diag-fixed">1</div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb"></div><div class="diag-cell diag-bb"></div><div class="diag-cell diag-bb"></div>
+                        
+                        <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-br"></div>
+                        <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-br"></div>
+                        <div class="diag-cell bg-amber-400 dark:bg-amber-600 font-bold text-white z-10 diag-br">3</div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40 diag-br"></div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40 diag-br"></div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40 diag-br"></div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40 diag-fixed">8</div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40"></div>
+                        <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40"></div>
+                        
+                        <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-br"></div><div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-br"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
+                        <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-bb diag-br"></div><div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40 diag-bb diag-br"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-br diag-fixed">6</div><div class="diag-cell diag-bb diag-br"></div><div class="diag-cell diag-bb diag-fixed">1</div><div class="diag-cell diag-bb"></div><div class="diag-cell diag-bb"></div>
+                        
+                        <div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell"></div><div class="diag-cell diag-fixed">4</div><div class="diag-cell"></div>
+                        <div class="diag-cell diag-br diag-fixed">9</div><div class="diag-cell diag-br"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br diag-fixed">8</div><div class="diag-cell diag-br"></div><div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
+                        <div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-br"></div><div class="diag-cell diag-fixed">7</div><div class="diag-cell"></div><div class="diag-cell"></div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-3 justify-center text-xs">
+                    <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-indigo-100 dark:bg-indigo-950 border border-slate-400"></div> Baris</div>
+                    <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-blue-100 dark:bg-blue-950 border border-slate-400"></div> Kolom</div>
+                    <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-emerald-100 dark:bg-emerald-950 border border-slate-400"></div> Subgrid 3x3</div>
+                    <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-amber-400 border border-slate-400"></div> Sel Target</div>
                 </div>
             </div>
             
             <div class="space-y-5">
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">1</span>
-                    <p class="text-sm leading-relaxed dark:text-slate-300">Each <b>row</b>, <b>column</b>, and 3x3 <b>box</b> (highlighted above) must contain numbers 1-9 without repetition.</p>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Setiap <b class="text-indigo-600 dark:text-indigo-400">Baris</b>, <b class="text-blue-600 dark:text-blue-400">Kolom</b>, dan <b class="text-emerald-600 dark:text-emerald-400">Subgrid 3x3</b> tidak boleh memiliki angka kembar (1-9).</p>
                 </div>
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">2</span>
-                    <p class="text-sm leading-relaxed dark:text-slate-300">Click a cell to select it, then use the number pad to fill in your move.</p>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Klik kotak kosong yang ingin kamu isi, lalu tekan panel angka di bagian bawah.</p>
                 </div>
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</span>
-                    <p class="text-sm leading-relaxed dark:text-slate-300">Use the <b>Hint</b> button if you get stuck, but note the 4-second cooldown!</p>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Gunakan tombol <b>Hint</b> jika benar-benar buntu dengan konsekuensi penalti cooldown 4 detik.</p>
                 </div>
             </div>
         </div>
@@ -328,6 +346,7 @@
         }
     }
 
+    // Penyelarasan highlight crosshair di game utama
     function selectCell(cell) {
         if (isPaused || gameFinished) return;
         if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
@@ -470,7 +489,6 @@
     document.getElementById('tutorial-btn').addEventListener('click', () => { if(!isPaused) togglePause(); document.getElementById('tutorial-modal').classList.add('active'); });
     document.getElementById('close-modal-top').addEventListener('click', () => { document.getElementById('tutorial-modal').classList.remove('active'); if(isPaused) togglePause(); });
 
-    // Memulai Permainan
     muatSoalHarianDariGithub();
 </script>
 </body></html>
