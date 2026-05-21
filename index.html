@@ -25,7 +25,6 @@
                         }
                     },
                     "animation": {
-                        // Cooldown animation updated to 10s duration
                         "cooldown": "cooldown 10s linear",
                         "flash": "flashGlow 0.6s ease-in-out"
                     }
@@ -76,13 +75,15 @@
         html.dark .cell.error-state { background-color: #7f1d1d !important; color: #fca5a5 !important; }
 
         .animate-grid-flash { animation: flashGlow 0.6s ease-in-out; }
-        #hint-cooldown-bar { display: none; }
-        #hint-btn:disabled #hint-cooldown-bar { display: block; }
+        
+        /* Cooldown Bars */
+        #hint-cooldown-bar, #check-cooldown-bar { display: none; }
+        #hint-btn:disabled #hint-cooldown-bar, #check-btn:disabled #check-cooldown-bar { display: block; }
+        
         .modal-overlay { display: none; position: fixed; inset: 0; background-color: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); z-index: 50; }
         .modal-overlay.active { display: flex; }
         .paused-board { filter: blur(8px); pointer-events: none; }
 
-        /* DIAGRAM CELL LOOKS FOR TUTORIAL */
         .diag-cell { display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; background-color: #ffffff; color: #0b1c30; }
         html.dark .diag-cell { background-color: #1e293b; color: #f1f5f9; }
         .diag-fixed { font-weight: 700; color: #000000; }
@@ -108,7 +109,7 @@
             </div>
 
             <div class="flex items-center gap-2 text-on-surface-variant text-[12px] sm:text-[13px] bg-surface-container rounded-full px-4 py-1.5 font-semibold truncate">
-                <span id="game-level-info">Lvl --</span>
+                <span id="game-level-info">Today's Level: Lvl --</span>
             </div>
 
             <div class="flex items-center gap-1.5 shrink-0">
@@ -162,18 +163,23 @@
         </div>
         
         <div class="flex justify-between items-center bg-surface-container rounded-2xl p-1.5 shadow-inner divide-x divide-outline-variant/60 dark:divide-slate-600/60">
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-l-xl" id="undo-btn">
-                <span class="material-symbols-outlined">undo</span>
-                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Undo</span>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2.5 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-l-xl" id="undo-btn">
+                <span class="material-symbols-outlined text-[20px]">undo</span>
+                <span class="text-[10px] font-bold mt-0.5 uppercase tracking-wider">Undo</span>
             </button>
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95" id="erase-btn">
-                <span class="material-symbols-outlined">backspace</span>
-                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Erase</span>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2.5 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95" id="erase-btn">
+                <span class="material-symbols-outlined text-[20px]">backspace</span>
+                <span class="text-[10px] font-bold mt-0.5 uppercase tracking-wider">Erase</span>
             </button>
-            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-3 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-r-xl relative overflow-hidden group disabled:opacity-70" id="hint-btn">
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2.5 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 relative overflow-hidden group disabled:opacity-70" id="check-btn">
+                <div class="absolute bottom-0 left-0 h-1 bg-red-500/60 dark:bg-red-400 w-0 animate-cooldown" id="check-cooldown-bar"></div>
+                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                <span class="text-[10px] font-bold mt-0.5 uppercase tracking-wider whitespace-nowrap">Show Wrong Answer</span>
+            </button>
+            <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2.5 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-r-xl relative overflow-hidden group disabled:opacity-70" id="hint-btn">
                 <div class="absolute bottom-0 left-0 h-1 bg-primary/60 dark:bg-indigo-400 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
-                <span class="material-symbols-outlined">lightbulb</span>
-                <span class="text-[11px] font-bold mt-1 uppercase tracking-wider">Hint</span>
+                <span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                <span class="text-[10px] font-bold mt-0.5 uppercase tracking-wider">Hint</span>
             </button>
         </div>
     </div>
@@ -188,11 +194,9 @@
             </button>
         </div>
         <div class="p-6 overflow-y-auto max-h-[70vh] space-y-6">
-            
             <div class="flex flex-col items-center gap-4">
                 <div class="w-full max-w-[320px] aspect-square bg-slate-400 dark:bg-slate-600 p-0.5 rounded-xl shadow-md">
                     <div class="grid grid-cols-3 grid-rows-3 gap-0.5 h-full w-full">
-                        
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40 font-bold">5</div>
                             <div class="diag-cell"></div><div class="diag-cell diag-fixed">2</div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
@@ -208,19 +212,10 @@
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
                         </div>
-
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-amber-400 font-bold text-white z-10">3</div>
-                            
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
-                            
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div>
-                            <div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
+                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-amber-400 font-bold text-white z-10">3</div>
+                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
+                            <div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-emerald-100 dark:bg-emerald-950/40"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
                         </div>
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
                             <div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40"></div><div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40"></div><div class="diag-cell bg-indigo-100 dark:bg-indigo-950/40"></div>
@@ -232,7 +227,6 @@
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
                             <div class="diag-cell diag-fixed">1</div><div class="diag-cell"></div><div class="diag-cell"></div>
                         </div>
-
                         <div class="grid grid-cols-3 grid-rows-3 gap-px bg-slate-200 dark:bg-slate-700">
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
                             <div class="diag-cell diag-fixed">9</div><div class="diag-cell"></div><div class="diag-cell bg-blue-100 dark:bg-blue-950/40"></div>
@@ -248,10 +242,8 @@
                             <div class="diag-cell"></div><div class="diag-cell"></div><div class="diag-cell"></div>
                             <div class="diag-cell diag-fixed">7</div><div class="diag-cell"></div><div class="diag-cell"></div>
                         </div>
-
                     </div>
                 </div>
-                
                 <div class="flex flex-wrap gap-3 justify-center text-xs">
                     <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-indigo-100 dark:bg-indigo-950 border border-slate-400"></div> Row</div>
                     <div class="flex items-center gap-1.5"><div class="w-3 h-3 bg-blue-100 dark:bg-blue-950 border border-slate-400"></div> Column</div>
@@ -271,7 +263,11 @@
                 </div>
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">3</span>
-                    <p class="text-sm leading-relaxed dark:text-slate-300">Stuck on a grid? Use the <b>Hint</b> button to reveal the answer, but be aware of the 10-second delay penalty!</p>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Errors are hidden by default! Use the <b>Show Wrong Answer</b> button (10s cooldown) to temporarily highlight your mistakes on the board in red.</p>
+                </div>
+                <div class="flex gap-4">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">4</span>
+                    <p class="text-sm leading-relaxed dark:text-slate-300">Stuck on a grid? Use the <b>Hint</b> button to reveal the correct digit, featuring a 10-second penalty cooldown.</p>
                 </div>
             </div>
         </div>
@@ -294,7 +290,7 @@
 <script>
     let solution = [], clues = [];
     let currentSelectedCell = null, history = [], timerSeconds = 0;
-    let hintOnCooldown = false, isPaused = false, timerInterval = null, gameFinished = false;
+    let hintOnCooldown = false, checkOnCooldown = false, isPaused = false, timerInterval = null, gameFinished = false;
 
     const gridElement = document.getElementById('sudoku-grid');
     const boardWrapper = document.getElementById('board-wrapper');
@@ -323,7 +319,7 @@
 
     async function muatSoalHarianDariGithub() {
         if (periksaKunciHarian()) {
-            document.getElementById('game-level-info').textContent = "Lvl Completed";
+            document.getElementById('game-level-info').textContent = "Today's Level: Completed";
             return;
         }
 
@@ -342,7 +338,7 @@
                 clues.push(soal.puzzle[r][c]);
             }
 
-            document.getElementById('game-level-info').textContent = `Lvl ${soal.level}`;
+            document.getElementById('game-level-info').textContent = `Today's Level: Lvl ${soal.level}`;
 
             initGrid();
             startTimer();
@@ -365,6 +361,10 @@
         }
     }
 
+    function clearErrorState() {
+        Array.from(gridElement.children).forEach(c => c.classList.remove('error-state'));
+    }
+
     function highlightCells(index) {
         const row = Math.floor(index / 9), col = index % 9;
         const cells = gridElement.children;
@@ -382,6 +382,7 @@
 
     function selectCell(cell) {
         if (isPaused || gameFinished) return;
+        clearErrorState(); 
         if (currentSelectedCell) currentSelectedCell.classList.remove('selected');
         cell.classList.add('selected');
         currentSelectedCell = cell;
@@ -419,20 +420,22 @@
     function inputNumber(val) {
         if (isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
         const idx = parseInt(currentSelectedCell.dataset.index);
-        history.push({ index: idx, val: currentSelectedCell.textContent, err: currentSelectedCell.classList.contains('error-state') });
+        
+        clearErrorState();
+        history.push({ index: idx, val: currentSelectedCell.textContent });
         currentSelectedCell.textContent = val;
+        
         if (parseInt(val) === parseInt(currentSelectedCell.dataset.correct)) {
-            currentSelectedCell.classList.remove('error-state');
             checkGroupFlash(idx);
             if (Array.from(gridElement.children).every(c => parseInt(c.textContent) === parseInt(c.dataset.correct))) triggerWin();
-        } else currentSelectedCell.classList.add('error-state');
+        }
         highlightCells(idx);
     }
 
     function hapusAngkaPilihan() {
         if(currentSelectedCell && currentSelectedCell.dataset.fixed !== "true") { 
+            clearErrorState();
             currentSelectedCell.textContent = ''; 
-            currentSelectedCell.classList.remove('error-state'); 
             highlightCells(parseInt(currentSelectedCell.dataset.index)); 
         }
     }
@@ -446,7 +449,7 @@
         winModal.classList.add('active');
         Array.from(gridElement.children).forEach(c => {
             c.classList.add('animate-grid-flash');
-            c.classList.remove('selected', 'highlight-crosshair', 'highlight-same-number');
+            c.classList.remove('selected', 'highlight-crosshair', 'highlight-same-number', 'error-state');
         });
     }
 
@@ -503,18 +506,52 @@
         }
     });
 
-    // EVENT LISTENERS UI
+    // EVENT LISTENERS BUTTON ACTION
     document.querySelectorAll('.num-btn').forEach(b => b.addEventListener('click', () => inputNumber(b.dataset.value)));
     document.getElementById('erase-btn').addEventListener('click', hapusAngkaPilihan);
-    document.getElementById('undo-btn').addEventListener('click', () => { if(history.length > 0) { const l = history.pop(); const c = gridElement.children[l.index]; c.textContent = l.val; l.err ? c.classList.add('error-state') : c.classList.remove('error-state'); selectCell(c); } });
+    document.getElementById('undo-btn').addEventListener('click', () => { 
+        if(history.length > 0) { 
+            clearErrorState();
+            const l = history.pop(); 
+            const c = gridElement.children[l.index]; 
+            c.textContent = l.val; 
+            selectCell(c); 
+        } 
+    });
     
-    // BUGFIX: Engine logic timeout changed to 10 seconds (10000ms)
+    // Logika Show Wrong Answer Button (10s Cooldown)
+    document.getElementById('check-btn').addEventListener('click', () => {
+        if (checkOnCooldown || isPaused || gameFinished) return;
+        
+        let adaMeleset = false;
+        Array.from(gridElement.children).forEach(c => {
+            const isiTeks = c.textContent.trim();
+            if (isiTeks !== '' && c.dataset.fixed !== "true") {
+                if (parseInt(isiTeks) !== parseInt(c.dataset.correct)) {
+                    c.classList.add('error-state');
+                    adaMeleset = true;
+                }
+            }
+        });
+
+        checkOnCooldown = true; 
+        document.getElementById('check-btn').disabled = true;
+        
+        setTimeout(() => { 
+            checkOnCooldown = false; 
+            document.getElementById('check-btn').disabled = false; 
+            clearErrorState(); 
+        }, 10000);
+    });
+
+    // Logika Hint Button (10s Cooldown)
     document.getElementById('hint-btn').addEventListener('click', () => {
         if (hintOnCooldown || isPaused || gameFinished || !currentSelectedCell || currentSelectedCell.dataset.fixed === "true") return;
         if (parseInt(currentSelectedCell.textContent) === parseInt(currentSelectedCell.dataset.correct)) return;
         
         inputNumber(currentSelectedCell.dataset.correct);
-        hintOnCooldown = true; document.getElementById('hint-btn').disabled = true;
+        hintOnCooldown = true; 
+        document.getElementById('hint-btn').disabled = true;
         setTimeout(() => { hintOnCooldown = false; document.getElementById('hint-btn').disabled = false; }, 10000);
     });
 
