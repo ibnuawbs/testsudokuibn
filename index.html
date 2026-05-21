@@ -181,7 +181,7 @@
             </button>
         </div>
         <div class="p-6 overflow-y-auto max-h-[70vh] space-y-6">
-            <img class="w-full rounded-2xl mb-2" src="https://lh3.googleusercontent.com/aida/ADBb0uidppCS8iUDf4Dt15yKmYdlRMovyga2_YuVzRQYnDtBhnA6ixzyc6fqUUI8Z2Q4ymvHdspz_dLbEjZ_ulJMEuKqyDD3k0rZoNyS0awowpeAxlGsPz_w82wjZ2OLRb4n04idUlWb2dvRUGcNq5lGfKVEJpuMqpD8eYRu9DRN1WAiwmDP_U90BntmDflZNU6lkIIfWCjkd1h_tO6Fs0QxFifkssDx6wswd_aE4kAHrUXcrZYu5uyi-QKkhg7m">
+            <img class="w-full rounded-2xl mb-2" src="https://lh3.googleusercontent.com/aida/ADBb0uidppCS8iUDf4Dt15yKmYdlRMovyga2_YuVzRQYnDtBhnA6ixzyc6fqUUI8Z2Q4ymvHdspz_dLbEjZ_ulJMEuKqyDD3k0rZoNyS0awowpeAxlGsPz_w82wjZ2OLRb4n04idUlWb2dvRUGcNq5lGfKVEJpuMqpD8eYRu9DRN1WAiwmDP_U90BntmDflZNU6lkIIfWCjkd1h_tO6Fs0QxFifkssDx6wswd_aE4kAHrUXcrZYu5uyi-QKkhg7m" alt="Sudoku Tutorial Illustration">
             <div class="space-y-5">
                 <div class="flex gap-4">
                     <span class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">1</span>
@@ -208,7 +208,7 @@
         <h2 class="text-3xl font-bold mb-2 dark:text-white">Well Done!</h2>
         <p class="text-slate-500 dark:text-slate-400 mb-8">Solved in <span class="font-bold text-primary dark:text-indigo-400" id="win-time">00:00</span>.</p>
         <button class="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-full font-bold transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2" onclick="location.reload()">
-            <span class="material-symbols-outlined">refresh</span> Play Again
+            <span class="material-symbols-outlined">refresh</span> Play Another Daily Games
         </button>
     </div>
 </div>
@@ -224,13 +224,11 @@
     const dailyLockOverlay = document.getElementById('daily-lock-overlay');
     const winModal = document.getElementById('win-modal');
 
-    // Mengambil kunci unik penanda harian berbasis tanggal (Format: YYYY-MM-DD)
     const getHariIniKey = () => {
         const d = new Date();
         return `sudoku_completed_${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
     };
 
-    /* CHECK LOCK STATE PADA SAAT AWAL LOAD HALAMAN */
     function periksaKunciHarian() {
         if (localStorage.getItem(getHariIniKey()) === 'true') {
             gameFinished = true;
@@ -245,9 +243,7 @@
         return false;
     }
 
-    /* FETCHING PUZZLE FROM GITHUB */
     async function muatSoalHarianDariGithub() {
-        // Jika sudah selesai bermain hari ini, hentikan inisialisasi board baru
         if (periksaKunciHarian()) {
             document.getElementById('game-level-info').textContent = "Lvl Selesai";
             return;
@@ -268,7 +264,6 @@
                 clues.push(soal.puzzle[r][c]);
             }
 
-            // Memperbarui informasi level di header UI
             document.getElementById('game-level-info').textContent = `Lvl ${soal.level}`;
 
             initGrid();
@@ -276,7 +271,6 @@
         } catch (error) { location.reload(); }
     }
 
-    /* RENDER GRID SYSTEM */
     function initGrid() {
         gridElement.innerHTML = '';
         for (let i = 0; i < 81; i++) {
@@ -365,12 +359,9 @@
         }
     }
 
-    /* TRIGGER WIN & SIMPAN LOCK STATE KE LOCALSTORAGE */
     function triggerWin() {
         gameFinished = true; 
         clearInterval(timerInterval);
-        
-        // Simpan status bahwa hari ini sudah berhasil dikerjakan (Aman dari refresh/buka tab baru)
         localStorage.setItem(getHariIniKey(), 'true');
 
         document.getElementById('win-time').textContent = formatTime(timerSeconds);
@@ -381,6 +372,9 @@
         });
     }
 
+    if (localStorage.getItem('theme') === 'dark') setDark(true);
+    document.getElementById('dark-mode-btn').addEventListener('click', () => setDark(!document.documentElement.classList.contains('dark')));
+
     function togglePause() {
         if (gameFinished) return;
         isPaused = !isPaused;
@@ -390,18 +384,11 @@
         document.getElementById('pause-btn-icon').textContent = isPaused ? 'play_arrow' : 'pause';
     }
 
-    /* DARK MODE LOGIC */
-    const darkModeBtn = document.getElementById('dark-mode-btn');
-    const darkModeIcon = document.getElementById('dark-mode-icon');
-    
     function setDark(isDark) {
         document.documentElement.classList.toggle('dark', isDark);
-        darkModeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+        document.getElementById('dark-mode-icon').textContent = isDark ? 'light_mode' : 'dark_mode';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
-
-    if (localStorage.getItem('theme') === 'dark') setDark(true);
-    darkModeBtn.addEventListener('click', () => setDark(!document.documentElement.classList.contains('dark')));
 
     function startTimer() { timerInterval = setInterval(() => { if (!isPaused && !gameFinished) { timerSeconds++; document.getElementById('timer').textContent = formatTime(timerSeconds); } }, 1000); }
     function formatTime(s) { return `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`; }
@@ -457,7 +444,6 @@
     document.getElementById('tutorial-btn').addEventListener('click', () => { if(!isPaused) togglePause(); document.getElementById('tutorial-modal').classList.add('active'); });
     document.getElementById('close-modal-top').addEventListener('click', () => { document.getElementById('tutorial-modal').classList.remove('active'); if(isPaused) togglePause(); });
 
-    // Memulai Permainan
     muatSoalHarianDariGithub();
 </script>
 </body></html>
