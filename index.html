@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
-<title>Ibn Sudoku</title>
+<title>Daily Sudoku by Ibn</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <script id="tailwind-config">
@@ -53,8 +53,9 @@
         .block-border-right { border-right: 3px solid rgba(0, 0, 0, 0.2); }
         .block-border-bottom { border-bottom: 3px solid rgba(0, 0, 0, 0.2); }
 
-        .cell.highlight-crosshair { background-color: #f1f5f9 !important; }
-        .cell.highlight-same-number { background-color: #cbd5e1 !important; }
+        /* FIX: HIGH CONTRAST GAMEPLAY HIGHLIGHTS FOR LIGHT MODE */
+        .cell.highlight-crosshair { background-color: #dbeafe !important; }
+        .cell.highlight-same-number { background-color: #93c5fd !important; }
         .cell.selected { background-color: #3525cd !important; color: #ffffff !important; z-index: 10; }
         .cell.error-state { background-color: #ba1a1a !important; color: #ffffff !important; z-index: 10; }
 
@@ -72,8 +73,6 @@
         html.dark .cell { background-color: #1e1e1e; color: #e2e8f0; }
         html.dark .cell[data-fixed="true"] { color: #e2e8f0; font-weight: 600; }
         html.dark .cell:not([data-fixed="true"]) { color: #bfdbfe; } 
-        
-        /* FIX: Ensure keypad digits text turn crisp white on dark mode */
         html.dark #number-pad .num-btn { color: #ffffff !important; }
 
         html.dark .cell.highlight-crosshair { background-color: #334155 !important; } 
@@ -96,7 +95,7 @@
         .t-cell { text-align: center; vertical-align: middle; font-size: 13px; font-weight: 500; color: #000000; background-color: #ffffff; border: 1px solid #cbd5e1; }
         html.dark .t-cell { color: #e2e8f0; background-color: #1e1e1e; border-color: #475569; }
         
-        /* INNER 3X3 GRID BOLD PARTITIONS (CORRECTION) */
+        /* INNER 3X3 GRID BOLD PARTITIONS */
         .tutorial-table td:nth-child(3) { border-right-width: 3px !important; border-right-color: #000000 !important; }
         .tutorial-table td:nth-child(6) { border-right-width: 3px !important; border-right-color: #000000 !important; }
         .tutorial-table tr:nth-child(3) td { border-bottom-width: 3px !important; border-bottom-color: #000000 !important; }
@@ -107,16 +106,15 @@
         html.dark .tutorial-table tr:nth-child(3) td { border-bottom-color: #e2e8f0 !important; }
         html.dark .tutorial-table tr:nth-child(6) td { border-bottom-color: #e2e8f0 !important; }
 
-        /* PROPORSIS SEL SERAGAM DAN PROPORSI BUJUR SANGKAR PERMANEN (CORRECTION) */
         .tutorial-table td { width: 11.11%; height: 11.11%; aspect-ratio: 1/1; }
 
-        /* LIGHT MODE HIGH CONTRAST SOLID DIAGRAM HIGHLIGHTS */
-        .th-row { background-color: #cbd5e1 !important; color: #000000 !important; }
-        .th-col { background-color: #bfdbfe !important; color: #1e3a8a !important; }
-        .th-sub { background-color: #a7f3d0 !important; color: #064e3b !important; }
-        .th-target { background-color: #f59e0b !important; color: #ffffff !important; font-weight: 700; }
+        /* LIGHT MODE HIGHLIGHTS FOR TUTORIAL POPUP */
+        .th-row { background-color: #94a3b8 !important; color: #ffffff !important; }
+        .th-col { background-color: #60a5fa !important; color: #ffffff !important; }
+        .th-sub { background-color: #34d399 !important; color: #ffffff !important; }
+        .th-target { background-color: #ea580c !important; color: #ffffff !important; font-weight: 700; }
 
-        /* DARK MODE HIGH CONTRAST SOLID DIAGRAM HIGHLIGHTS */
+        /* DARK MODE SOLID HIGHLIGHT PROPERTIES */
         html.dark .th-row { background-color: #475569 !important; color: #e2e8f0 !important; }
         html.dark .th-col { background-color: #1e3a8a !important; color: #bfdbfe !important; }
         html.dark .th-sub { background-color: #065f46 !important; color: #a7f3d0 !important; }
@@ -207,7 +205,10 @@
             <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 relative overflow-hidden group disabled:opacity-70" id="check-btn">
                 <div class="absolute bottom-0 left-0 h-1 bg-red-500/60 dark:bg-red-400 w-0 animate-cooldown" id="check-cooldown-bar"></div>
                 <span class="material-symbols-outlined text-[16px] sm:text-[20px]">visibility</span>
-                <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider whitespace-nowrap">Wrong Answer</span>
+                <span class="text-[9px] font-bold mt-0.5 uppercase tracking-wider leading-tight flex flex-col items-center">
+                    <span>Wrong</span>
+                    <span>Answer</span>
+                </span>
             </button>
             <button class="flex-1 flex flex-col items-center justify-center text-on-surface-variant py-2 hover:bg-white dark:hover:bg-slate-700 transition-all active:scale-95 rounded-r-xl relative overflow-hidden group disabled:opacity-70" id="hint-btn">
                 <div class="absolute bottom-0 left-0 h-1 bg-primary/60 dark:bg-indigo-400 w-0 animate-cooldown" id="hint-cooldown-bar"></div>
@@ -234,43 +235,43 @@
                         <tr>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r th-col font-bold">5</td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
+                            <td class="t-cell th-col font-bold">5</td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                        </tr>
-                        <tr>
-                            <td class="t-cell"></td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell tb-r th-col font-bold">2</td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                         </tr>
                         <tr>
-                            <td class="t-cell tb-b font-bold">1</td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b tb-r th-col"></td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b tb-r"></td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell th-col font-bold">2</td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                        </tr>
+                        <tr>
+                            <td class="t-cell font-bold">1</td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell th-col"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
                         </tr>
                         <tr>
                             <td class="t-cell th-sub"></td>
                             <td class="t-cell th-sub"></td>
-                            <td class="t-cell tb-r th-target">3</td>
+                            <td class="t-cell th-target">3</td>
                             <td class="t-cell th-row"></td>
                             <td class="t-cell th-row"></td>
-                            <td class="t-cell tb-r th-row"></td>
+                            <td class="t-cell th-row"></td>
                             <td class="t-cell th-row font-bold">8</td>
                             <td class="t-cell th-row"></td>
                             <td class="t-cell th-row"></td>
@@ -278,43 +279,43 @@
                         <tr>
                             <td class="t-cell th-sub"></td>
                             <td class="t-cell th-sub"></td>
-                            <td class="t-cell tb-r th-col"></td>
+                            <td class="t-cell th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
+                            <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                         </tr>
                         <tr>
-                            <td class="t-cell tb-b th-sub"></td>
-                            <td class="t-cell tb-b th-sub"></td>
-                            <td class="t-cell tb-b tb-r th-col"></td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b font-bold">6</td>
-                            <td class="t-cell tb-b tb-r"></td>
-                            <td class="t-cell tb-b font-bold">1</td>
-                            <td class="t-cell tb-b"></td>
-                            <td class="t-cell tb-b"></td>
+                            <td class="t-cell th-sub"></td>
+                            <td class="t-cell th-sub"></td>
+                            <td class="t-cell th-col"></td>
+                            <td class="t-cell font-bold">6</td>
+                            <td class="t-cell font-bold">1</td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
                         </tr>
                         <tr>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r th-col"></td>
+                            <td class="t-cell th-col"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell font-bold">4</td>
+                            <td class="t-cell"></td>
                             <td class="t-cell"></td>
                         </tr>
                         <tr>
                             <td class="t-cell font-bold">9</td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r th-col"></td>
-                            <td class="t-cell"></td>
+                            <td class="t-cell th-col"></td>
                             <td class="t-cell font-bold">8</td>
-                            <td class="t-cell tb-r"></td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
@@ -322,11 +323,11 @@
                         <tr>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell tb-r th-col"></td>
+                            <td class="t-cell th-col"></td>
                             <td class="t-cell"></td>
-                            <td class="t-cell"></td>
-                            <td class="t-cell tb-r"></td>
                             <td class="t-cell font-bold">7</td>
+                            <td class="t-cell"></td>
+                            <td class="t-cell"></td>
                             <td class="t-cell"></td>
                             <td class="t-cell"></td>
                         </tr>
